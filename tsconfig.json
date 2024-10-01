@@ -67,7 +67,8 @@
   },
   "exclude": [
     "dist",
-    "supabase",
+    "supabase-testnet",
+    "supabase-mainnet",
     "node_modules",
     ".vscode",
     "test-src",
