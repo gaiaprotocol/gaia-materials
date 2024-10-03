@@ -3,7 +3,7 @@ import { AppCompConfig } from "@common-module/app-components";
 import { MaterialLoadingSpinner } from "@common-module/material-loading-spinner";
 import { UniversalWalletConnector } from "@common-module/wallet";
 import { WalletLoginManager } from "@common-module/wallet-login";
-import { SupabaseConnector } from "../../supabase-module/lib/index.js";
+import { SupabaseConnector } from "@common-module/supabase";
 import AppConfig, { IAppConfig } from "./AppConfig.js";
 import LoginView from "./auth/LoginView.js";
 import LogoutView from "./auth/LogoutView.js";
