@@ -173,11 +173,14 @@ button.contained .material-loading-spinner > svg > circle {
   --contained-button-bg-color: #fff;
   --contained-button-text-color: #000;
   --contained-button-hover-bg-color: #e9e9e9;
-  --outlined-button-line-color: var(--line-color);
+  --outlined-button-border-color: var(--line-color);
   --outlined-button-bg-color: transparent;
   --outlined-button-text-color: #fff;
-  --outlined-button-hover-line-color: var(--line-color);
+  --outlined-button-hover-border-color: var(--line-color);
   --outlined-button-hover-bg-color: rgba(255, 255, 255, 0.08);
+  --input-border-color: #4e4e4e;
+  --input-hover-border-color: #8c8c8c;
+  --input-focus-border-color: #e3e3e3;
   --loading-spinner-color: #fff;
   --loading-spinner-on-contained-button-color: #000;
 }
@@ -283,18 +286,18 @@ button.contained:active {
   background-color: var(--contained-button-hover-bg-color);
 }
 button.outlined {
-  border: 1px solid var(--outlined-button-line-color);
+  border: 1px solid var(--outlined-button-border-color);
   background-color: var(--outlined-button-bg-color);
   color: var(--outlined-button-text-color);
 }
 @media (pointer: fine) {
   button.outlined:hover:not(.disabled) {
-    border-color: var(--outlined-button-hover-line-color);
+    border-color: var(--outlined-button-hover-border-color);
     background-color: var(--outlined-button-hover-bg-color);
   }
 }
 button.outlined:active:not(.disabled) {
-  border-color: var(--outlined-button-hover-line-color);
+  border-color: var(--outlined-button-hover-border-color);
   background-color: var(--outlined-button-hover-bg-color);
 }
 .button-group {
@@ -314,6 +317,36 @@ button.outlined:active:not(.disabled) {
   margin-bottom: 0;
   border-bottom-left-radius: 16px;
   border-bottom-right-radius: 16px;
+}
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 34px;
+}
+.input {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+.input.required > .label::after {
+  content: '*';
+  margin-left: 3px;
+}
+.input > .label {
+  font-size: 15.14px;
+}
+.input > input {
+  width: 100%;
+  height: 40px;
+  padding: 0 13.5px;
+  border: 1px solid var(--input-border-color);
+  border-radius: 4.5px;
+}
+.input > input:focus {
+  border-color: var(--input-focus-border-color);
+}
+.input > input:hover {
+  border-color: var(--input-hover-border-color);
 }
 dialog.modal {
   width: 90%;
@@ -424,5 +457,18 @@ dialog.modal.structured-modal > footer {
   .wallet-login-popup > footer {
     padding: 24px !important;
   }
+}
+.new-material-view {
+  display: flex;
+  flex-direction: column;
+  gap: 45px;
+}
+.new-material-view > header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.new-material-view > header > h1 {
+  font-size: 22px;
 }
 
