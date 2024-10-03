@@ -1,20 +1,25 @@
 import { BodyNode, el, Router, View } from "@common-module/app";
 import { Button, ButtonType, Form, Input } from "@common-module/app-components";
 import { WalletLoginManager } from "@common-module/wallet-login";
+import { ContractManager } from "gaiaprotocol";
+import AppConfig from "../AppConfig.js";
 
 export default class NewMaterialView extends View {
+  private nameInput: Input;
+  private symbolInput: Input;
+
   constructor() {
     super();
     this.container = el(
       ".new-material-view",
       el("header", el("h1", "Create New Material")),
       new Form(
-        new Input({
+        this.nameInput = new Input({
           label: "Token Name",
           placeholder: "e.g., MyToken",
           required: true,
         }),
-        new Input({
+        this.symbolInput = new Input({
           label: "Token Symbol",
           placeholder: "e.g., MTK",
           required: true,
@@ -25,6 +30,7 @@ export default class NewMaterialView extends View {
         new Button({
           type: ButtonType.Contained,
           title: "Create",
+          onClick: () => this.createMaterial(),
         }),
       ),
     ).appendTo(BodyNode);
@@ -32,5 +38,21 @@ export default class NewMaterialView extends View {
     if (!WalletLoginManager.isLoggedIn) {
       Router.goWithoutHistory("/login", { redirectTo: "/material/new" });
     }
+  }
+
+  private async createMaterial(): Promise<void> {
+    const contract = ContractManager.getMaterialTradeContract(
+      AppConfig.isForSepolia ? "base-sepolia" : "base",
+    );
+    if (!contract) throw new Error("MaterialTrade contract not found");
+
+    const signer = await WalletLoginManager.getSigner();
+    if (!signer) throw new Error("Signer not found");
+
+    await contract.createMaterial(
+      signer,
+      this.nameInput.value,
+      this.symbolInput.value,
+    );
   }
 }

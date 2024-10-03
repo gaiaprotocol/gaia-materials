@@ -4,4 +4,6 @@ init({
   supabaseUrl: "",
   supabaseKey: "",
   messageForLogin: "Please login to continue",
+
+  isForSepolia: false,
 });

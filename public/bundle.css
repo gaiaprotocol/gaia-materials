@@ -166,6 +166,7 @@ button.contained .material-loading-spinner > svg > circle {
   --line-color: #333333;
   --page-bg-color: #000;
   --paragraph-text-color: #fff;
+  --placeholder-color: rgba(255, 255, 255, 0.5);
   --overlay-color: rgba(34, 34, 34, 0.6);
   --modal-bg-color: #171717;
   --text-button-text-color: #fff;
@@ -226,6 +227,9 @@ dialog {
   border: none;
   outline: none;
   padding: 0;
+}
+::placeholder {
+  color: var(--placeholder-color);
 }
 button {
   display: flex;
