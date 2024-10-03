@@ -38,13 +38,11 @@ export default async function init(config: IAppConfig) {
     },
   });
 
-  ContractManager.addMaterialTradeContract("base-sepolia", {
-    id: 84532,
-    name: "Base Sepolia Testnet",
-    symbol: "ETH",
-    rpc: "https://sepolia.base.org",
-    explorerUrl: "https://sepolia.basescan.org",
-  }, "0x3Fcea379bCc53Df5062Bc9428FEFb5c495bE75be");
+  ContractManager.addMaterialTradeContract(
+    "base-sepolia",
+    "https://sepolia.base.org",
+    "0x3Fcea379bCc53Df5062Bc9428FEFb5c495bE75be",
+  );
 
   Router.add("/login", LoginView);
   Router.add("/logout", LogoutView);
