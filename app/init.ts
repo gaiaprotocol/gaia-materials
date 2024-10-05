@@ -10,6 +10,7 @@ import LogoutView from "./auth/LogoutView.js";
 import NewGameView from "./game/NewGameView.js";
 import NewMaterialView from "./material/NewMaterialView.js";
 import { ContractManager } from "gaiaprotocol";
+import MaterialInfoView from "./material/MaterialInfoView.js";
 
 export default async function init(config: IAppConfig) {
   AppConfig.init(config);
@@ -41,11 +42,14 @@ export default async function init(config: IAppConfig) {
   ContractManager.addMaterialTradeContract(
     "base-sepolia",
     "https://sepolia.base.org",
-    "0x3Fcea379bCc53Df5062Bc9428FEFb5c495bE75be",
+    "0xD3B4b6B07949A807E18d93F33Fe9a9516dADf453",
   );
 
   Router.add("/login", LoginView);
   Router.add("/logout", LogoutView);
+
   Router.add("/material/new", NewMaterialView);
+  Router.add("/material/:chain/:address", MaterialInfoView);
+
   Router.add("/game/new", NewGameView);
 }

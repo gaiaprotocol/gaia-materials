@@ -14,7 +14,7 @@ startServer(
     },
     {
       MaterialTrade: {
-        "base-sepolia": "0x3Fcea379bCc53Df5062Bc9428FEFb5c495bE75be",
+        "base-sepolia": "0xD3B4b6B07949A807E18d93F33Fe9a9516dADf453",
       },
     },
     {

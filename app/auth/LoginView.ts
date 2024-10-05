@@ -1,6 +1,5 @@
-import { BodyNode, el, Router, View } from "@common-module/app";
+import { BodyNode, el, Router, View, ViewParams } from "@common-module/app";
 import { Alert } from "@common-module/app-components";
-import { ViewParams } from "@common-module/app/lib/route/View.js";
 import { WalletLoginContent } from "@common-module/wallet-login";
 import AppConfig from "../AppConfig.js";
 

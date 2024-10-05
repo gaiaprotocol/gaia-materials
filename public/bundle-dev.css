@@ -352,6 +352,33 @@ button.outlined:active:not(.disabled) {
 .input > input:hover {
   border-color: var(--input-hover-border-color);
 }
+.select {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+.select.required > .label::after {
+  content: '*';
+  margin-left: 3px;
+}
+.select > .label {
+  font-size: 15.14px;
+}
+.select > select {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 40px;
+  padding: 0 13.5px;
+  border: 1px solid var(--input-border-color);
+  border-radius: 4.5px;
+}
+.select > select:focus {
+  border-color: var(--input-focus-border-color);
+}
+.select > select:hover {
+  border-color: var(--input-hover-border-color);
+}
 dialog.modal {
   width: 90%;
   max-width: 600px;
