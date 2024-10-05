@@ -50,12 +50,14 @@ export default class NewMaterialView extends View {
     const signer = await WalletLoginManager.getSigner();
     if (!signer) throw new Error("Signer not found");
 
-    await contract.createMaterial(
+    const materialAddress = await contract.createMaterial(
       signer,
       this.nameInput.value,
       this.symbolInput.value,
     );
 
     await ContractEventTracker.trackEvents(chain, "MaterialTrade");
+
+    Router.go(`/material/${materialAddress}`);
   }
 }

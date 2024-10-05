@@ -1,6 +1,6 @@
 import { startServer } from "https://raw.githubusercontent.com/yjgaia/deno-module/main/api.ts";
 import { serveWalletApi } from "https://raw.githubusercontent.com/yjgaia/wallet-login-module/main/deno/wallet.ts";
-import { serveContractApi } from "https://raw.githubusercontent.com/yjgaia/contract-module/main/deno/contract.ts";
+import { serveContractApi } from "https://raw.githubusercontent.com/yjgaia/contract-event-tracker/main/deno/contract.ts";
 import MaterialTradeContract from "https://raw.githubusercontent.com/gaiaprotocol/gaiaprotocol-module/main/deno/contracts/MaterialTradeContract.ts";
 
 startServer(
