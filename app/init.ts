@@ -1,16 +1,17 @@
 import { Router, SPAInitializer } from "@common-module/app";
 import { AppCompConfig } from "@common-module/app-components";
 import { MaterialLoadingSpinner } from "@common-module/material-loading-spinner";
+import { SupabaseConnector } from "@common-module/supabase";
 import { UniversalWalletConnector } from "@common-module/wallet";
 import { WalletLoginManager } from "@common-module/wallet-login";
-import { SupabaseConnector } from "@common-module/supabase";
+import { ContractManager } from "gaiaprotocol";
 import AppConfig, { IAppConfig } from "./AppConfig.js";
 import LoginView from "./auth/LoginView.js";
 import LogoutView from "./auth/LogoutView.js";
+import GameInfoView from "./game/GameInfoView.js";
 import NewGameView from "./game/NewGameView.js";
-import NewMaterialView from "./material/NewMaterialView.js";
-import { ContractManager } from "gaiaprotocol";
 import MaterialInfoView from "./material/MaterialInfoView.js";
+import NewMaterialView from "./material/NewMaterialView.js";
 
 export default async function init(config: IAppConfig) {
   AppConfig.init(config);
@@ -52,4 +53,5 @@ export default async function init(config: IAppConfig) {
   Router.add("/material/:chain/:address", MaterialInfoView);
 
   Router.add("/game/new", NewGameView);
+  Router.add("/game/:id", GameInfoView);
 }

@@ -1,10 +1,12 @@
-import { BodyNode, el, Router, View, ViewParams } from "@common-module/app";
+import { BodyNode, el, Router, View } from "@common-module/app";
 import { Alert } from "@common-module/app-components";
 import { WalletLoginContent } from "@common-module/wallet-login";
 import AppConfig from "../AppConfig.js";
 
-export default class LoginView extends View {
-  private redirectTo: `/${string}` | undefined;
+type DT = { redirectTo?: `/${string}` };
+
+export default class LoginView extends View<DT> {
+  private redirectTo?: `/${string}`;
 
   constructor() {
     super();
@@ -18,7 +20,7 @@ export default class LoginView extends View {
     ).appendTo(BodyNode);
   }
 
-  public changeParams(params: ViewParams): void {
-    this.redirectTo = params.redirectTo as `/${string}` | undefined;
+  public changeParams(data: DT): void {
+    this.redirectTo = data.redirectTo;
   }
 }
