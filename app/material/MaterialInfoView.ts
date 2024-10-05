@@ -1,6 +1,5 @@
 import { BodyNode, el, View, ViewParams } from "@common-module/app";
 import { Button, ButtonType } from "@common-module/app-components";
-import { WalletLoginManager } from "@common-module/wallet-login";
 import { parseEther } from "ethers";
 import { ContractManager, MaterialService } from "gaiaprotocol";
 
@@ -17,23 +16,21 @@ export default class MaterialInfoView extends View {
   }
 
   private async buy(chain: string, address: string) {
-    const contract = ContractManager.getMaterialTradeContract(chain);
-    if (!contract) throw new Error("MaterialTrade contract not found");
-
-    const signer = await WalletLoginManager.getSigner();
-    if (!signer) throw new Error("Signer not found");
-
-    await contract.buy(signer, address, parseEther("1"));
+    await ContractManager.executeMaterialTradeAction(
+      chain,
+      async (contract, signer) => {
+        await contract.buy(signer, address, parseEther("1"));
+      },
+    );
   }
 
   private async sell(chain: string, address: string) {
-    const contract = ContractManager.getMaterialTradeContract(chain);
-    if (!contract) throw new Error("MaterialTrade contract not found");
-
-    const signer = await WalletLoginManager.getSigner();
-    if (!signer) throw new Error("Signer not found");
-
-    await contract.sell(signer, address, parseEther("1"));
+    await ContractManager.executeMaterialTradeAction(
+      chain,
+      async (contract, signer) => {
+        await contract.sell(signer, address, parseEther("1"));
+      },
+    );
   }
 
   private async loadMaterial(chain: string, address: string) {

@@ -6,7 +6,6 @@ import {
   Input,
   Select,
 } from "@common-module/app-components";
-import { ContractEventTracker } from "@common-module/contract-event-tracker";
 import { WalletLoginManager } from "@common-module/wallet-login";
 import { ContractManager } from "gaiaprotocol";
 import AppConfig from "../AppConfig.js";
@@ -62,21 +61,14 @@ export default class NewMaterialView extends View {
 
   private async createMaterial(): Promise<void> {
     const chain = this.chainSelect.value;
-
-    const contract = ContractManager.getMaterialTradeContract(chain);
-    if (!contract) throw new Error("MaterialTrade contract not found");
-
-    const signer = await WalletLoginManager.getSigner();
-    if (!signer) throw new Error("Signer not found");
-
-    const materialAddress = await contract.createMaterial(
-      signer,
-      this.nameInput.value,
-      this.symbolInput.value,
-    );
-
-    await ContractEventTracker.trackEvents(chain, "MaterialTrade");
-
+    const materialAddress = await ContractManager
+      .executeMaterialTradeAction(chain, async (contract, signer) => {
+        return await contract.createMaterial(
+          signer,
+          this.nameInput.value,
+          this.symbolInput.value,
+        );
+      });
     Router.go(`/material/${chain}/${materialAddress}`);
   }
 }
