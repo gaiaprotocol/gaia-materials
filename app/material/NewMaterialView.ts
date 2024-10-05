@@ -1,5 +1,6 @@
 import { BodyNode, el, Router, View } from "@common-module/app";
 import { Button, ButtonType, Form, Input } from "@common-module/app-components";
+import { ContractEventTracker } from "@common-module/contract-event-tracker";
 import { WalletLoginManager } from "@common-module/wallet-login";
 import { ContractManager } from "gaiaprotocol";
 import AppConfig from "../AppConfig.js";
@@ -41,9 +42,9 @@ export default class NewMaterialView extends View {
   }
 
   private async createMaterial(): Promise<void> {
-    const contract = ContractManager.getMaterialTradeContract(
-      AppConfig.isForSepolia ? "base-sepolia" : "base",
-    );
+    const chain = AppConfig.isForSepolia ? "base-sepolia" : "base";
+
+    const contract = ContractManager.getMaterialTradeContract(chain);
     if (!contract) throw new Error("MaterialTrade contract not found");
 
     const signer = await WalletLoginManager.getSigner();
@@ -54,5 +55,7 @@ export default class NewMaterialView extends View {
       this.nameInput.value,
       this.symbolInput.value,
     );
+
+    await ContractEventTracker.trackEvents(chain, "MaterialTrade");
   }
 }

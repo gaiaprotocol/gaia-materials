@@ -9,6 +9,7 @@
     "@common-module/app-components": "^0.1.0",
     "@common-module/material-loading-spinner": "^0.1.0",
     "@common-module/wallet-login": "^0.1.0",
+    "@common-module/contract-event-tracker": "^0.1.0",
     "gaiaprotocol": "^0.1.0"
   },
   "devDependencies": {
