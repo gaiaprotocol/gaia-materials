@@ -1,12 +1,20 @@
-import { BodyNode, el, View } from "@common-module/app";
+import { BodyNode, DomNode, el, View } from "@common-module/app";
+import { Button } from "@common-module/app-components";
 import { GameMaterialService, GameService } from "gaiaprotocol";
 
 type DT = { id: string };
 
 export default class GameInfoView extends View<DT> {
+  private gameInfoDisplay: DomNode;
+  private materialsDisplay: DomNode;
+
   constructor() {
     super();
-    this.container = el(".game-info-view").appendTo(BodyNode);
+    this.container = el(
+      ".game-info-view",
+      this.gameInfoDisplay = el(".game-info-display"),
+      this.materialsDisplay = el(".materials-display"),
+    ).appendTo(BodyNode);
   }
 
   public changeData(data: DT): void {
@@ -23,7 +31,15 @@ export default class GameInfoView extends View<DT> {
     const data = await GameMaterialService.fetchAllMaterials(id);
     console.log(data);
 
-    //TEST
-    //await GameMaterialService.addMaterial(id, "base-sepolia", "0x1bBB115A431E4C61e318E0f7aDA92d2BbBD424eE");
+    this.materialsDisplay.empty();
+
+    this.materialsDisplay.append(
+      new Button({
+        title: "Add Material",
+        onClick: () => {
+          //TODO:
+        },
+      }),
+    );
   }
 }
