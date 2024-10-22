@@ -74,6 +74,7 @@
     "test-src",
     "old",
     "test",
+    "legacy",
     "typechain-types",
     "scripts",
     "server",
