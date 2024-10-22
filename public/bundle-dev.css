@@ -670,6 +670,10 @@ li.chat-message-list-item > main {
     padding: 24px !important;
   }
 }
+.materialtech-logo {
+  display: flex;
+  align-items: center;
+}
 .new-material-view {
   display: flex;
   flex-direction: column;
