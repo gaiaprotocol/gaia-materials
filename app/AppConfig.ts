@@ -1,3 +1,10 @@
+import { DropdownMenuGroup } from "@common-module/app-components";
+import { SocialCompConfig } from "@common-module/social-components";
+import { WalletLoginConfig } from "@common-module/wallet-login";
+import { GaiaUIPreset } from "@gaiaprotocol/ui-preset";
+import { base, baseSepolia } from "@wagmi/core/chains";
+import { GaiaProtocolConfig } from "gaiaprotocol";
+
 export interface IAppConfig {
   isDevMode: boolean;
   isTestnet: boolean;
@@ -9,6 +16,25 @@ class AppConfig implements IAppConfig {
 
   public init(config: IAppConfig) {
     Object.assign(this, config);
+    GaiaUIPreset.init();
+
+    GaiaProtocolConfig.initOnlyForGaiaProtocol(
+      config.isDevMode,
+      config.isTestnet,
+    );
+
+    SocialCompConfig.goLoggedInUserProfile = async (user) => {
+    };
+
+    SocialCompConfig.getLoggedInUserMenu = async (menu, user) => {
+      return new DropdownMenuGroup();
+    };
+
+    WalletLoginConfig.init({
+      chains: [base, baseSepolia] as any,
+      walletConnectProjectId: "7538ca3cec20504b06a3338d0e53b028",
+      supabaseConnector: GaiaProtocolConfig.supabaseConnector,
+    });
   }
 }
 

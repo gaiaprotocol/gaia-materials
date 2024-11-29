@@ -1,8 +1,8 @@
 import { DomNode, Router } from "@common-module/app";
 
-export default class MaterialTechLogo extends DomNode {
+export default class GaiaMaterialsLogo extends DomNode {
   constructor() {
-    super("a.materialtech-logo");
+    super("a.gaia-materials-logo");
     this.onDom("click", () => Router.go("/"));
 
     const imageHeight = 40;
