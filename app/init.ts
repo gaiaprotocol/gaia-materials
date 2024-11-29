@@ -3,6 +3,7 @@ import { WalletLoginManager } from "@common-module/wallet-login";
 import AppConfig, { IAppConfig } from "./AppConfig.js";
 import ConsoleLayout from "./console/ConsoleLayout.js";
 import ConsoleView from "./console/ConsoleView.js";
+import NewGameView from "./console/NewGameView.js";
 import HomeView from "./views/HomeView.js";
 import Layout from "./views/Layout.js";
 
@@ -15,5 +16,6 @@ export default async function init(config: IAppConfig) {
     .add("/*", Layout, ["/console", "/console/*"])
     .add("/", HomeView)
     .add(["/console", "/console/*"], ConsoleLayout)
-    .add("/console", ConsoleView);
+    .add("/console", ConsoleView)
+    .add("/console/new-game", NewGameView);
 }

@@ -1,0 +1,25 @@
+.console-view {
+  max-width: 1280px;
+  margin   : 0 auto;
+  padding  : 64px 32px;
+
+  @container (width <=@phone-width) {
+    padding: 24px 16px;
+  }
+
+  >section {
+    >header {
+      display        : flex;
+      align-items    : center;
+      justify-content: space-between;
+
+      >h2 {
+        font-size: 32px;
+
+        @container (width <=@phone-width) {
+          font-size: 24px;
+        }
+      }
+    }
+  }
+}

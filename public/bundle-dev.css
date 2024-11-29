@@ -2174,8 +2174,36 @@ li.chat-message-list-item > main {
     right: -999999px;
   }
 }
-.console-layout > main {
-  max-width: 720px;
+.console-view {
+  max-width: 1280px;
   margin: 0 auto;
+  padding: 64px 32px;
+}
+@container (width <= 520px) {
+  .console-view {
+    padding: 24px 16px;
+  }
+}
+.console-view > section > header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.console-view > section > header > h2 {
+  font-size: 32px;
+}
+@container (width <= 520px) {
+  .console-view > section > header > h2 {
+    font-size: 24px;
+  }
+}
+.new-game-view {
+  max-width: 512px;
+  margin: 40px auto 80px;
+  padding: 0 16px;
+}
+.new-game-view > header {
+  font-size: 32px;
+  text-align: center;
 }
 
