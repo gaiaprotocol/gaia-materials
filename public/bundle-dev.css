@@ -125,14 +125,12 @@ meter {
   font-weight: 700;
   font-display: swap;
 }
-/*
 @font-face {
   font-family: 'Trajan Pro';
-  font-style : normal;
+  font-style: normal;
   font-weight: normal;
-  src        : url("https://common-resources.gaia.cc/fonts/trajan-pro.woff") format("woff");
+  src: url("https://common-resources.gaia.cc/fonts/trajan-pro.woff") format("woff");
 }
-*/
 @keyframes rotate-material-loading-spinner {
   0% {
     transform: rotate(0deg);
@@ -2137,6 +2135,46 @@ li.chat-message-list-item > main {
   }
 }
 .layout > main {
+  max-width: 720px;
+  margin: 0 auto;
+}
+.console-layout {
+  padding-top: 72px;
+}
+@container (width <= 520px) {
+  .console-layout {
+    padding-bottom: 56px;
+  }
+}
+.console-layout > header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background-color: rgba(8, 8, 8, 0.8);
+  backdrop-filter: blur(24px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 24px;
+}
+.console-layout > header > h1 {
+  display: flex;
+  align-items: center;
+  height: 40px;
+  gap: 10px;
+  font-size: 22px;
+  font-family: 'Trajan Pro';
+}
+@container (width <= 520px) {
+  .console-layout > header > .button-container > .logged-in-user-avatar-button {
+    position: fixed;
+    top: -999999px;
+    right: -999999px;
+  }
+}
+.console-layout > main {
   max-width: 720px;
   margin: 0 auto;
 }

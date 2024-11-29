@@ -5,7 +5,7 @@ import {
 } from "@common-module/app-components";
 import { SocialCompConfig } from "@common-module/social-components";
 import { WalletLoginConfig } from "@common-module/wallet-login";
-import { WalletIcon } from "@gaiaprotocol/svg-icons";
+import { GameIcon, WalletIcon } from "@gaiaprotocol/svg-icons";
 import { GaiaUIPreset } from "@gaiaprotocol/ui-preset";
 import { base, baseSepolia } from "@wagmi/core/chains";
 import { GaiaProtocolConfig } from "gaiaprotocol";
@@ -32,16 +32,28 @@ class AppConfig implements IAppConfig {
     };
 
     SocialCompConfig.getLoggedInUserMenu = async (menu, user) => {
-      return new DropdownMenuGroup(
-        new DropdownMenuItem({
-          icon: new WalletIcon(),
-          label: "My Wallet",
-          onClick: () => {
-            Router.go("/wallet");
-            menu.remove();
-          },
-        }),
-      );
+      return [
+        new DropdownMenuGroup(
+          new DropdownMenuItem({
+            icon: new WalletIcon(),
+            label: "My Wallet",
+            onClick: () => {
+              Router.go("/wallet");
+              menu.remove();
+            },
+          }),
+        ),
+        new DropdownMenuGroup(
+          new DropdownMenuItem({
+            icon: new GameIcon(),
+            label: "Game Console",
+            onClick: () => {
+              Router.go("/console");
+              menu.remove();
+            },
+          }),
+        ),
+      ];
     };
 
     WalletLoginConfig.init({
