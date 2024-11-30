@@ -1959,30 +1959,37 @@ li.chat-message-list-item > main {
   left: 50%;
   transform: translate(-50%, -50%);
 }
-.persona-form {
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-}
-.persona-form > .avatar-container {
+.persona-avatar-input {
   position: relative;
   width: 120px;
   height: 120px;
-  display: flex;
-  justify-content: center;
 }
-.persona-form > .avatar-container > button.edit {
+.persona-avatar-input > .loading-spinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.persona-avatar-input > button.edit {
   position: absolute;
   top: 0;
   right: 50%;
   transform: translate(calc(50% + 45px), 0);
   min-height: 32px;
 }
-.persona-form > .avatar-container > button.edit > .icon-container,
-.persona-form > .avatar-container > button.edit > .icon-container > .icon,
-.persona-form > .avatar-container > button.edit > .icon-container > .icon > svg {
+.persona-avatar-input > button.edit > .icon-container,
+.persona-avatar-input > button.edit > .icon-container > .icon,
+.persona-avatar-input > button.edit > .icon-container > .icon > svg {
   width: 16px;
   height: 16px;
+}
+.persona-form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+.persona-form > .persona-avatar-input {
+  margin: 0 auto;
 }
 .persona-form > .display-name-input-container > .select-name-buttons {
   margin-top: 10px;
