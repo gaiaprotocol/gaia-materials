@@ -3,7 +3,7 @@ import { WalletLoginManager } from "@common-module/wallet-login";
 import AppConfig, { IAppConfig } from "./AppConfig.js";
 import ConsoleLayout from "./console/ConsoleLayout.js";
 import ConsoleView from "./console/ConsoleView.js";
-import NewGameView from "./console/NewGameView.js";
+import NewGameView from "./console/game/NewGameView.js";
 import HomeView from "./views/HomeView.js";
 import Layout from "./views/Layout.js";
 
