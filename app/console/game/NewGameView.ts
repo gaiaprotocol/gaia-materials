@@ -1,7 +1,7 @@
 import { el, View } from "@common-module/app";
 import { Button, ButtonType } from "@common-module/app-components";
 import ConsoleLayout from "../ConsoleLayout.js";
-import GameForm from "./GameForm.js";
+import GameForm from "./form/GameForm.js";
 
 export default class NewGameView extends View {
   constructor() {
