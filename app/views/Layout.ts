@@ -1,7 +1,7 @@
 import { BodyNode, DomNode, el, View } from "@common-module/app";
 import { LoggedInUserAvatarButton } from "@common-module/social-components";
 import { WalletLoginManager } from "@common-module/wallet-login";
-import MaterialTechLogo from "../components/GaiaMaterialsLogo.js";
+import MaterialTechLogo from "../GaiaMaterialsLogo.js";
 
 export default class Layout extends View {
   private static current: Layout;
