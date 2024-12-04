@@ -1,11 +1,13 @@
 import { DomNode } from "@common-module/app";
-import GameLogoInput from "./GameLogoInput.js";
+import GameScreenshotInput from "./GameScreenshotInput.js";
+import GameThumbnailInput from "./GameThumbnailInput.js";
 
 export default class GameForm extends DomNode {
   constructor() {
     super(".game-form");
     this.append(
-      new GameLogoInput({}),
+      new GameThumbnailInput(),
+      new GameScreenshotInput([]),
     );
   }
 }
