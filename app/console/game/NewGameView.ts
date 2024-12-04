@@ -9,7 +9,7 @@ export default class NewGameView extends View {
     ConsoleLayout.content = this.container = el(
       ".new-game-view",
       el("header", el("h2", "Create a new game")),
-      new GameForm(),
+      el("main", new GameForm()),
       el(
         "footer",
         new Button({

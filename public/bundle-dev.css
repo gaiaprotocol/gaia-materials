@@ -2145,4 +2145,147 @@ li.chat-message-list-item > main {
   font-size: 32px;
   text-align: center;
 }
+.new-game-view > main {
+  padding: 80px 0 72px;
+}
+.new-game-view > footer > button {
+  width: 100%;
+}
+.game-form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+.game-form > .game-logo-input {
+  margin: 0 auto;
+}
+.game-logo-input {
+  position: relative;
+  width: 120px;
+  height: 120px;
+}
+.game-logo-input > .loading-spinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.game-logo-input > .logo-display {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background-color: #333;
+  background-size: cover;
+  background-position: center;
+}
+.game-logo-input > .logo-display > .icon.upload {
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.game-logo-input > .logo-display:hover {
+  filter: brightness(0.8);
+  cursor: pointer;
+}
+.game-logo-input > .logo-display:hover > .icon.upload {
+  display: block;
+}
+.game-logo-input > .logo-display.drag-hover {
+  filter: brightness(0.8);
+  border: 2px dashed #666;
+}
+.game-logo-input > .logo-display.drag-hover > .icon.upload {
+  display: block;
+}
+.game-logo-input > button.clear {
+  position: absolute;
+  top: 0;
+  right: 50%;
+  transform: translate(calc(50% + 45px), 0);
+  min-height: 32px;
+}
+.game-logo-input > button.clear > .icon-container,
+.game-logo-input > button.clear > .icon-container > .icon,
+.game-logo-input > button.clear > .icon-container > .icon > svg {
+  width: 16px;
+  height: 16px;
+}
+.new-material-view {
+  max-width: 512px;
+  margin: 40px auto 80px;
+  padding: 0 16px;
+}
+.new-material-view > header {
+  font-size: 32px;
+  text-align: center;
+}
+.new-material-view > main {
+  padding: 80px 0 72px;
+}
+.new-material-view > footer > button {
+  width: 100%;
+}
+.material-form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+.material-form > .material-logo-input {
+  margin: 0 auto;
+}
+.material-logo-input {
+  position: relative;
+  width: 120px;
+  height: 120px;
+}
+.material-logo-input > .loading-spinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.material-logo-input > .logo-display {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background-color: #333;
+  background-size: cover;
+  background-position: center;
+}
+.material-logo-input > .logo-display > .icon.upload {
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.material-logo-input > .logo-display:hover {
+  filter: brightness(0.8);
+  cursor: pointer;
+}
+.material-logo-input > .logo-display:hover > .icon.upload {
+  display: block;
+}
+.material-logo-input > .logo-display.drag-hover {
+  filter: brightness(0.8);
+  border: 2px dashed #666;
+}
+.material-logo-input > .logo-display.drag-hover > .icon.upload {
+  display: block;
+}
+.material-logo-input > button.clear {
+  position: absolute;
+  top: 0;
+  right: 50%;
+  transform: translate(calc(50% + 45px), 0);
+  min-height: 32px;
+}
+.material-logo-input > button.clear > .icon-container,
+.material-logo-input > button.clear > .icon-container > .icon,
+.material-logo-input > button.clear > .icon-container > .icon > svg {
+  width: 16px;
+  height: 16px;
+}
 
