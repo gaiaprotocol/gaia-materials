@@ -2271,10 +2271,8 @@ li.chat-message-list-item > main {
 .game-thumbnail-input.has-thumbnail > button.clear {
   display: block;
 }
-.game-screenshot-input {
-  position: relative;
-}
 .game-screenshot-input > .upload-area {
+  position: relative;
   height: 120px;
   border: 1px solid var(--line-color);
   border-radius: 8px;
@@ -2283,6 +2281,20 @@ li.chat-message-list-item > main {
   align-items: center;
   justify-content: center;
   gap: 8px;
+}
+.game-screenshot-input > .upload-area:hover {
+  filter: brightness(0.8);
+  cursor: pointer;
+}
+.game-screenshot-input > .upload-area:hover > .icon.upload {
+  display: block;
+}
+.game-screenshot-input > .upload-area.drag-hover {
+  filter: brightness(0.8);
+  border: 2px dashed #666;
+}
+.game-screenshot-input > .upload-area.drag-hover > .icon.upload {
+  display: block;
 }
 .game-screenshot-input > .upload-area > .icon.upload {
   display: none;
@@ -2297,39 +2309,37 @@ li.chat-message-list-item > main {
   left: 50%;
   transform: translate(-50%, -50%);
 }
+.game-screenshot-input > .screenshot-container {
+  width: 100%;
+  overflow-x: auto;
+  padding: 8px;
+  border: 1px solid var(--line-color);
+  border-radius: 8px;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.game-screenshot-input > .screenshot-container::-webkit-scrollbar {
+  display: none;
+}
 .game-form-screenshot-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  display: flex;
   gap: 16px;
+  min-height: 135px;
+  width: max-content;
 }
 .game-form-screenshot-list-item {
   position: relative;
-  aspect-ratio: 16 / 9;
+  width: 240px;
+  height: 135px;
   border-radius: 8px;
   overflow: hidden;
   cursor: grab;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease;
 }
 .game-form-screenshot-list-item.dragging {
   opacity: 0.5;
-}
-.game-form-screenshot-list-item > .drag-handle {
-  position: absolute;
-  top: 14px;
-  left: 14px;
-  width: 16px;
-  height: 16px;
-  background: rgba(0, 0, 0, 0.5);
-  border-radius: 4px;
-  padding: 2px;
-  display: none;
-  justify-content: center;
-  align-items: center;
-  z-index: 1;
-}
-.game-form-screenshot-list-item > .drag-handle > svg {
-  width: 12px;
-  height: 12px;
-  color: white;
+  transform: scale(0.95);
 }
 .game-form-screenshot-list-item > .screenshot-image {
   width: 100%;
@@ -2351,9 +2361,6 @@ li.chat-message-list-item > main {
 .game-form-screenshot-list-item > button.remove > .icon-container > .icon > svg {
   width: 16px;
   height: 16px;
-}
-.game-form-screenshot-list-item:hover > .drag-handle {
-  display: flex;
 }
 .game-form-screenshot-list-item:hover > button.remove {
   display: block;

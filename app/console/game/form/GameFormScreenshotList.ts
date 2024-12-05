@@ -5,7 +5,6 @@ export default class GameFormScreenshotList extends DomNode<HTMLDivElement, {
   changed: (screenshotUrls: string[]) => void;
 }> {
   public children: GameFormScreenshotListItem[] = [];
-
   private screenshotUrls: string[] = [];
 
   constructor(screenshotUrls: string[] = []) {
@@ -22,11 +21,11 @@ export default class GameFormScreenshotList extends DomNode<HTMLDivElement, {
       if (!draggingItem) return;
 
       const siblings = this.children.filter((child) => child !== draggingItem);
+      const mouseX = event.clientX;
 
       const nextSibling = siblings.find((sibling) => {
         const rect = sibling.calculateRect();
-        const offset = (rect.x + rect.width / 2) - event.clientX;
-        return offset > 0;
+        return mouseX < rect.x + rect.width / 2;
       });
 
       if (nextSibling) {

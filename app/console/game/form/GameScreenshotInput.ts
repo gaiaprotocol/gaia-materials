@@ -24,7 +24,10 @@ export default class GameScreenshotInput extends DomNode<HTMLDivElement, {
         el(".placeholder", "Click or Drag & Drop to add screenshots"),
         new UploadIcon(),
       ),
-      this.screenshotList = new GameFormScreenshotList(screenshotUrls),
+      el(
+        ".screenshot-container",
+        this.screenshotList = new GameFormScreenshotList(screenshotUrls),
+      ),
     );
 
     this.screenshotList.on("changed", (urls) => this.emit("changed", urls));

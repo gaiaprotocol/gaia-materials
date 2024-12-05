@@ -1,7 +1,6 @@
 .game-screenshot-input {
-  position: relative;
-
   >.upload-area {
+    position     : relative;
     height       : 120px;
     border       : 1px solid var(--line-color);
     border-radius: 8px;
@@ -11,6 +10,24 @@
     align-items    : center;
     justify-content: center;
     gap            : 8px;
+
+    &:hover {
+      filter: brightness(0.8);
+      cursor: pointer;
+
+      >.icon.upload {
+        display: block;
+      }
+    }
+
+    &.drag-hover {
+      filter: brightness(0.8);
+      border: 2px dashed #666;
+
+      >.icon.upload {
+        display: block;
+      }
+    }
 
     >.icon.upload {
       display  : none;
@@ -26,5 +43,21 @@
       left     : 50%;
       transform: translate(-50%, -50%);
     }
+  }
+
+  >.screenshot-container {
+    width     : 100%;
+    overflow-x: auto;
+    padding   : 8px;
+
+    border       : 1px solid var(--line-color);
+    border-radius: 8px;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
+    -ms-overflow-style: none;
+    scrollbar-width   : none;
   }
 }
