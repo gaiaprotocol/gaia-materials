@@ -2,18 +2,19 @@ import { DomNode, el, ImageOptimizer } from "@common-module/app";
 import { AppCompConfig, FileDropzone } from "@common-module/app-components";
 import { UploadIcon } from "@gaiaprotocol/svg-icons";
 import { GaiaProtocolConfig } from "gaiaprotocol";
-import GameScreenshotList from "./GameFromScreenshotList.js";
+import GameFormScreenshotList from "./GameFormScreenshotList.js";
 
 export default class GameScreenshotInput extends DomNode<HTMLDivElement, {
   changed: (screenshotUrls: string[]) => void;
 }> {
-  private screenshotList: GameScreenshotList;
+  private uploadArea: FileDropzone;
+  private screenshotList: GameFormScreenshotList;
 
   constructor(screenshotUrls: string[] = []) {
     super(".game-screenshot-input");
 
     this.append(
-      new FileDropzone(
+      this.uploadArea = new FileDropzone(
         ".upload-area",
         {
           accept: "image/*",
@@ -23,7 +24,7 @@ export default class GameScreenshotInput extends DomNode<HTMLDivElement, {
         el(".placeholder", "Click or Drag & Drop to add screenshots"),
         new UploadIcon(),
       ),
-      this.screenshotList = new GameScreenshotList(screenshotUrls),
+      this.screenshotList = new GameFormScreenshotList(screenshotUrls),
     );
 
     this.screenshotList.on("changed", (urls) => this.emit("changed", urls));
@@ -49,7 +50,9 @@ export default class GameScreenshotInput extends DomNode<HTMLDivElement, {
   }
 
   private async uploadScreenshots(files: FileList | File[]) {
-    const loadingSpinner = new AppCompConfig.LoadingSpinner().appendTo(this);
+    const loadingSpinner = new AppCompConfig.LoadingSpinner().appendTo(
+      this.uploadArea,
+    );
 
     const uploadPromises = Array.from(files).map(async (file) => {
       const screenshotUrl = await this.optimizeAndUploadImage(file, 1280);
