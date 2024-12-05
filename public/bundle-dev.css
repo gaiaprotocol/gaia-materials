@@ -2212,6 +2212,16 @@ li.chat-message-list-item > main {
 .game-form > .game-logo-input {
   margin: 0 auto;
 }
+.game-form > .thumbnail-input-container,
+.game-form > .screenshot-input-container {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+.game-form > .thumbnail-input-container > label,
+.game-form > .screenshot-input-container > label {
+  font-size: 15.14px;
+}
 .game-thumbnail-input {
   position: relative;
 }
