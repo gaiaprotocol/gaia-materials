@@ -1,3 +1,69 @@
 .game-thumbnail-input {
-  
+  position: relative;
+
+  >.loading-spinner {
+    position : absolute;
+    top      : 50%;
+    left     : 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  >.thumbnail-display {
+    height       : 240px;
+    border       : 1px solid var(--line-color);
+    border-radius: 8px;
+
+    background-size    : cover;
+    background-position: center;
+
+    display        : flex;
+    align-items    : center;
+    justify-content: center;
+
+    >.icon.upload {
+      display  : none;
+      position : absolute;
+      top      : 50%;
+      left     : 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    &:hover {
+      filter: brightness(0.8);
+      cursor: pointer;
+
+      >.icon.upload {
+        display: block;
+      }
+    }
+
+    &.drag-hover {
+      filter: brightness(0.8);
+      border: 2px dashed #666;
+
+      >.icon.upload {
+        display: block;
+      }
+    }
+
+    &.has-thumbnail {
+      >.placeholder {
+        display: none;
+      }
+    }
+  }
+
+  >button.clear {
+    position  : absolute;
+    top       : 14px;
+    right     : 14px;
+    min-height: 32px;
+
+    >.icon-container,
+    >.icon-container>.icon,
+    >.icon-container>.icon>svg {
+      width : 16px;
+      height: 16px;
+    }
+  }
 }

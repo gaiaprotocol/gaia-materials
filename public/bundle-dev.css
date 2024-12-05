@@ -2190,7 +2190,7 @@ li.chat-message-list-item > main {
   }
 }
 .new-game-view {
-  max-width: 512px;
+  max-width: 600px;
   margin: 40px auto 80px;
   padding: 0 16px;
 }
@@ -2211,6 +2211,65 @@ li.chat-message-list-item > main {
 }
 .game-form > .game-logo-input {
   margin: 0 auto;
+}
+.game-thumbnail-input {
+  position: relative;
+}
+.game-thumbnail-input > .loading-spinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.game-thumbnail-input > .thumbnail-display {
+  height: 240px;
+  border: 1px solid var(--line-color);
+  border-radius: 8px;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.game-thumbnail-input > .thumbnail-display > .icon.upload {
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.game-thumbnail-input > .thumbnail-display:hover {
+  filter: brightness(0.8);
+  cursor: pointer;
+}
+.game-thumbnail-input > .thumbnail-display:hover > .icon.upload {
+  display: block;
+}
+.game-thumbnail-input > .thumbnail-display.drag-hover {
+  filter: brightness(0.8);
+  border: 2px dashed #666;
+}
+.game-thumbnail-input > .thumbnail-display.drag-hover > .icon.upload {
+  display: block;
+}
+.game-thumbnail-input > .thumbnail-display.has-thumbnail > .placeholder {
+  display: none;
+}
+.game-thumbnail-input > button.clear {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  min-height: 32px;
+}
+.game-thumbnail-input > button.clear > .icon-container,
+.game-thumbnail-input > button.clear > .icon-container > .icon,
+.game-thumbnail-input > button.clear > .icon-container > .icon > svg {
+  width: 16px;
+  height: 16px;
+}
+.game-screenshot-input {
+  height: 240px;
+  border: 1px solid var(--line-color);
 }
 .new-material-view {
   max-width: 512px;
