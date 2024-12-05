@@ -8,6 +8,7 @@ import NewGameView from "./console/game/NewGameView.js";
 import GameInfoView from "./views/GameInfoView.js";
 import HomeView from "./views/HomeView.js";
 import Layout from "./views/Layout.js";
+import NewMaterialView from "./console/material/NewMaterialView.js";
 
 export default async function init(config: IAppConfig) {
   AppConfig.init(config);
@@ -21,5 +22,6 @@ export default async function init(config: IAppConfig) {
     .add(["/console", "/console/*"], ConsoleLayout)
     .add("/console", ConsoleView)
     .add("/console/new-game", NewGameView)
-    .add("/console/game/:slug", ConsoleGameInfoView);
+    .add("/console/game/:slug", ConsoleGameInfoView)
+    .add("/console/game/:slug/new-material", NewMaterialView);
 }

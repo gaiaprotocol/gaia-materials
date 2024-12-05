@@ -2401,7 +2401,7 @@ li.chat-message-list-item > main {
   flex-direction: column;
   gap: 24px;
 }
-.material-form > .material-logo-input {
+.material-form > .logo-input {
   margin: 0 auto;
 }
 
