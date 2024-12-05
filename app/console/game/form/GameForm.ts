@@ -7,7 +7,7 @@ import GameThumbnailInput from "./GameThumbnailInput.js";
 export default class GameForm extends DomNode<HTMLDivElement, {
   dataChanged: (data: GameEntity) => void;
 }> {
-  private data: GameEntity;
+  public data: GameEntity;
 
   constructor(data?: GameEntity) {
     super(".game-form");
@@ -15,12 +15,9 @@ export default class GameForm extends DomNode<HTMLDivElement, {
     if (data) this.data = data;
     else {
       this.data = {
-        id: -1,
         name: "",
         slug: "",
-        is_public: false,
         screenshots: [],
-        created_at: new Date().toISOString(),
       };
     }
 
@@ -33,6 +30,18 @@ export default class GameForm extends DomNode<HTMLDivElement, {
           value: this.data.name,
           onChange: (newValue) => {
             this.data.name = newValue;
+            this.emit("dataChanged", this.data);
+          },
+        }),
+      ),
+      el(
+        ".slug-input-container",
+        new Input({
+          label: "Slug",
+          placeholder: "Enter game slug (URL)",
+          value: this.data.slug,
+          onChange: (newValue) => {
+            this.data.slug = newValue;
             this.emit("dataChanged", this.data);
           },
         }),

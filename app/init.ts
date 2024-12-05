@@ -3,7 +3,9 @@ import { WalletLoginManager } from "@common-module/wallet-login";
 import AppConfig, { IAppConfig } from "./AppConfig.js";
 import ConsoleLayout from "./console/ConsoleLayout.js";
 import ConsoleView from "./console/ConsoleView.js";
+import ConsoleGameInfoView from "./console/game/ConsoleGameInfoView.js";
 import NewGameView from "./console/game/NewGameView.js";
+import GameInfoView from "./views/GameInfoView.js";
 import HomeView from "./views/HomeView.js";
 import Layout from "./views/Layout.js";
 
@@ -15,7 +17,9 @@ export default async function init(config: IAppConfig) {
   Router
     .add("/*", Layout, ["/console", "/console/*"])
     .add("/", HomeView)
+    .add("/game/:slug", GameInfoView)
     .add(["/console", "/console/*"], ConsoleLayout)
     .add("/console", ConsoleView)
-    .add("/console/new-game", NewGameView);
+    .add("/console/new-game", NewGameView)
+    .add("/console/game/:slug", ConsoleGameInfoView);
 }
