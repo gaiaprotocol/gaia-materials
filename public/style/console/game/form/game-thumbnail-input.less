@@ -45,15 +45,11 @@
         display: block;
       }
     }
-
-    &.has-thumbnail {
-      >.placeholder {
-        display: none;
-      }
-    }
   }
 
   >button.clear {
+    display: none;
+
     position  : absolute;
     top       : 14px;
     right     : 14px;
@@ -64,6 +60,16 @@
     >.icon-container>.icon>svg {
       width : 16px;
       height: 16px;
+    }
+  }
+
+  &.has-thumbnail {
+    >.thumbnail-display>.placeholder {
+      display: none;
+    }
+
+    >button.clear {
+      display: block;
     }
   }
 }

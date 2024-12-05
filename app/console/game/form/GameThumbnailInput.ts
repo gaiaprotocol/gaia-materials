@@ -63,7 +63,7 @@ export default class GameThumbnailInput extends DomNode<HTMLDivElement, {
     this.thumbnailDisplay.style({
       backgroundImage: `url(${thumbnailImageUrl})`,
     });
-    this.thumbnailDisplay.addClass("has-thumbnail");
+    this.addClass("has-thumbnail");
 
     loadingSpinner.remove();
   }
@@ -72,6 +72,6 @@ export default class GameThumbnailInput extends DomNode<HTMLDivElement, {
     this.thumbnailUrl = undefined;
     this.emit("changed", this.thumbnailUrl);
     this.thumbnailDisplay.style({ backgroundImage: "" });
-    this.thumbnailDisplay.removeClass("has-thumbnail");
+    this.removeClass("has-thumbnail");
   }
 }

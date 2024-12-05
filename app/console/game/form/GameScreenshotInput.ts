@@ -1,23 +1,16 @@
 import { DomNode, el, ImageOptimizer } from "@common-module/app";
-import {
-  AppCompConfig,
-  Button,
-  ButtonType,
-  FileDropzone,
-} from "@common-module/app-components";
-import { DeleteIcon, UploadIcon } from "@gaiaprotocol/svg-icons";
+import { AppCompConfig, FileDropzone } from "@common-module/app-components";
+import { UploadIcon } from "@gaiaprotocol/svg-icons";
 import { GaiaProtocolConfig } from "gaiaprotocol";
+import GameScreenshotList from "./GameFromScreenshotList.js";
 
 export default class GameScreenshotInput extends DomNode<HTMLDivElement, {
   changed: (screenshotUrls: string[]) => void;
 }> {
-  private screenshotContainer: DomNode;
-  private screenshotUrls: string[] = [];
+  private screenshotList: GameScreenshotList;
 
   constructor(screenshotUrls: string[] = []) {
     super(".game-screenshot-input");
-
-    this.screenshotUrls = screenshotUrls;
 
     this.append(
       new FileDropzone(
@@ -30,14 +23,10 @@ export default class GameScreenshotInput extends DomNode<HTMLDivElement, {
         el(".placeholder", "Click or Drag & Drop to add screenshots"),
         new UploadIcon(),
       ),
-      this.screenshotContainer = el(".screenshot-container"),
+      this.screenshotList = new GameScreenshotList(screenshotUrls),
     );
 
-    // If initial screenshots are provided, display them
-    this.screenshotUrls.forEach((url) => {
-      const screenshotItem = this.createScreenshotItem(url);
-      this.screenshotContainer.append(screenshotItem);
-    });
+    this.screenshotList.on("changed", (urls) => this.emit("changed", urls));
   }
 
   private async optimizeAndUploadImage(file: File, maxSize: number) {
@@ -64,36 +53,10 @@ export default class GameScreenshotInput extends DomNode<HTMLDivElement, {
 
     const uploadPromises = Array.from(files).map(async (file) => {
       const screenshotUrl = await this.optimizeAndUploadImage(file, 1280);
-      this.screenshotUrls.push(screenshotUrl);
-      const screenshotItem = this.createScreenshotItem(screenshotUrl);
-      this.screenshotContainer.append(screenshotItem);
+      this.screenshotList.addScreenshotItem(screenshotUrl);
     });
 
     await Promise.all(uploadPromises);
-
-    this.emit("changed", this.screenshotUrls);
-
     loadingSpinner.remove();
-  }
-
-  private createScreenshotItem(url: string): DomNode {
-    const screenshotItem: DomNode = el(
-      ".screenshot-item",
-      el(".screenshot-image", {
-        style: { backgroundImage: `url(${url})` },
-      }),
-      new Button(".remove", {
-        type: ButtonType.Circle,
-        icon: new DeleteIcon(),
-        onClick: () => this.removeScreenshot(url, screenshotItem),
-      }),
-    );
-    return screenshotItem;
-  }
-
-  private removeScreenshot(url: string, screenshotItem: DomNode) {
-    this.screenshotUrls = this.screenshotUrls.filter((u) => u !== url);
-    screenshotItem.remove();
-    this.emit("changed", this.screenshotUrls);
   }
 }

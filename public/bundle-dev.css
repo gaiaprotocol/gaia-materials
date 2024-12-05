@@ -2252,10 +2252,8 @@ li.chat-message-list-item > main {
 .game-thumbnail-input > .thumbnail-display.drag-hover > .icon.upload {
   display: block;
 }
-.game-thumbnail-input > .thumbnail-display.has-thumbnail > .placeholder {
-  display: none;
-}
 .game-thumbnail-input > button.clear {
+  display: none;
   position: absolute;
   top: 14px;
   right: 14px;
@@ -2267,9 +2265,118 @@ li.chat-message-list-item > main {
   width: 16px;
   height: 16px;
 }
+.game-thumbnail-input.has-thumbnail > .thumbnail-display > .placeholder {
+  display: none;
+}
+.game-thumbnail-input.has-thumbnail > button.clear {
+  display: block;
+}
 .game-screenshot-input {
-  height: 240px;
+  position: relative;
+}
+.game-screenshot-input > .loading-spinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.game-screenshot-input > .upload-area {
+  height: 120px;
   border: 1px solid var(--line-color);
+  border-radius: 8px;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+.game-screenshot-input > .upload-area > .icon.upload {
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.game-screenshot-input > .upload-area:hover {
+  filter: brightness(0.8);
+  cursor: pointer;
+}
+.game-screenshot-input > .upload-area:hover > .icon.upload {
+  display: block;
+}
+.game-screenshot-input > .upload-area.drag-hover {
+  filter: brightness(0.8);
+  border: 2px dashed #666;
+}
+.game-screenshot-input > .upload-area.drag-hover > .icon.upload {
+  display: block;
+}
+.screenshot-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 16px;
+}
+.screenshot-item {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  border-radius: 8px;
+  overflow: hidden;
+  cursor: grab;
+}
+.screenshot-item.dragging {
+  opacity: 0.5;
+}
+.screenshot-item > .drag-handle {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  width: 16px;
+  height: 16px;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 4px;
+  padding: 2px;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 1;
+}
+.screenshot-item > .drag-handle > svg {
+  width: 12px;
+  height: 12px;
+  color: white;
+}
+.screenshot-item > .screenshot-image {
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  transition: filter 0.2s ease;
+}
+.screenshot-item > button.remove {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  min-height: 32px;
+  display: none;
+  z-index: 1;
+}
+.screenshot-item > button.remove > .icon-container,
+.screenshot-item > button.remove > .icon-container > .icon,
+.screenshot-item > button.remove > .icon-container > .icon > svg {
+  width: 16px;
+  height: 16px;
+}
+.screenshot-item:hover > .drag-handle {
+  display: flex;
+}
+.screenshot-item:hover > button.remove {
+  display: block;
+}
+.screenshot-item:hover > .screenshot-image {
+  filter: brightness(0.8);
+}
+.screenshot-item:active {
+  cursor: grabbing;
 }
 .new-material-view {
   max-width: 512px;
