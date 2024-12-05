@@ -1887,6 +1887,59 @@ li.chat-message-list-item > main {
   }
 }
 /* Gaia Components */
+.logo-input {
+  position: relative;
+  width: 120px;
+  height: 120px;
+}
+.logo-input > .loading-spinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.logo-input > .logo-display {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background-color: #333;
+  background-size: cover;
+  background-position: center;
+}
+.logo-input > .logo-display > .icon.upload {
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.logo-input > .logo-display:hover {
+  filter: brightness(0.8);
+  cursor: pointer;
+}
+.logo-input > .logo-display:hover > .icon.upload {
+  display: block;
+}
+.logo-input > .logo-display.drag-hover {
+  filter: brightness(0.8);
+  border: 2px dashed #666;
+}
+.logo-input > .logo-display.drag-hover > .icon.upload {
+  display: block;
+}
+.logo-input > button.clear {
+  position: absolute;
+  top: 0;
+  right: 50%;
+  transform: translate(calc(50% + 45px), 0);
+  min-height: 32px;
+}
+.logo-input > button.clear > .icon-container,
+.logo-input > button.clear > .icon-container > .icon,
+.logo-input > button.clear > .icon-container > .icon > svg {
+  width: 16px;
+  height: 16px;
+}
 .nft-list {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
@@ -2181,58 +2234,5 @@ li.chat-message-list-item > main {
 }
 .material-form > .material-logo-input {
   margin: 0 auto;
-}
-.material-logo-input {
-  position: relative;
-  width: 120px;
-  height: 120px;
-}
-.material-logo-input > .loading-spinner {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-.material-logo-input > .logo-display {
-  width: 120px;
-  height: 120px;
-  border-radius: 50%;
-  background-color: #333;
-  background-size: cover;
-  background-position: center;
-}
-.material-logo-input > .logo-display > .icon.upload {
-  display: none;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-.material-logo-input > .logo-display:hover {
-  filter: brightness(0.8);
-  cursor: pointer;
-}
-.material-logo-input > .logo-display:hover > .icon.upload {
-  display: block;
-}
-.material-logo-input > .logo-display.drag-hover {
-  filter: brightness(0.8);
-  border: 2px dashed #666;
-}
-.material-logo-input > .logo-display.drag-hover > .icon.upload {
-  display: block;
-}
-.material-logo-input > button.clear {
-  position: absolute;
-  top: 0;
-  right: 50%;
-  transform: translate(calc(50% + 45px), 0);
-  min-height: 32px;
-}
-.material-logo-input > button.clear > .icon-container,
-.material-logo-input > button.clear > .icon-container > .icon,
-.material-logo-input > button.clear > .icon-container > .icon > svg {
-  width: 16px;
-  height: 16px;
 }
 

@@ -3,7 +3,7 @@ import {
   AppCompConfig,
   Button,
   ButtonType,
-  InvisibleFileInput,
+  FileDropzone,
 } from "@common-module/app-components";
 import { DeleteIcon, UploadIcon } from "@gaiaprotocol/svg-icons";
 import { GaiaProtocolConfig } from "gaiaprotocol";
@@ -11,24 +11,17 @@ import { GaiaProtocolConfig } from "gaiaprotocol";
 export default class GameThumbnailInput extends DomNode<HTMLDivElement, {
   changed: (thumbnailUrl: string | undefined) => void;
 }> {
-  private invisibleFileInput: InvisibleFileInput;
-  private thumbnailDisplay: DomNode;
+  private thumbnailDisplay: FileDropzone;
 
   constructor(private thumbnailUrl?: string) {
     super(".game-thumbnail-input");
 
     this.append(
-      this.invisibleFileInput = new InvisibleFileInput({
-        accept: "image/*",
-        onChange: (files) => {
-          if (files.length > 0) this.uploadThumbnail(files[0]);
-        },
-      }),
-      this.thumbnailDisplay = el(
+      this.thumbnailDisplay = new FileDropzone(
         ".thumbnail-display",
         {
-          style: { backgroundImage: `url(${this.thumbnailUrl})` },
-          onclick: () => this.invisibleFileInput.openFileSelector(),
+          accept: "image/*",
+          onUpload: (files) => this.uploadThumbnail(files[0]),
         },
         el(".placeholder", "Click or Drag & Drop to upload thumbnail"),
         new UploadIcon(),
@@ -39,29 +32,6 @@ export default class GameThumbnailInput extends DomNode<HTMLDivElement, {
         onClick: () => this.clearThumbnail(),
       }),
     );
-
-    this.thumbnailDisplay.onDom("dragenter", (event) => {
-      event.preventDefault();
-      this.thumbnailDisplay.addClass("drag-hover");
-    });
-
-    this.thumbnailDisplay.onDom("dragover", (event) => {
-      event.preventDefault();
-      this.thumbnailDisplay.addClass("drag-hover");
-      event.dataTransfer!.dropEffect = "copy";
-    });
-
-    this.thumbnailDisplay.onDom("dragleave", () => {
-      this.thumbnailDisplay.removeClass("drag-hover");
-    });
-
-    this.thumbnailDisplay.onDom("drop", (event) => {
-      event.preventDefault();
-      this.thumbnailDisplay.removeClass("drag-hover");
-      if (event.dataTransfer!.files.length > 0) {
-        this.uploadThumbnail(event.dataTransfer!.files[0]);
-      }
-    });
   }
 
   private async optimizeAndUploadImage(file: File, maxSize: number) {

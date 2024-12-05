@@ -3,7 +3,7 @@ import {
   AppCompConfig,
   Button,
   ButtonType,
-  InvisibleFileInput,
+  FileDropzone,
 } from "@common-module/app-components";
 import { DeleteIcon, UploadIcon } from "@gaiaprotocol/svg-icons";
 import { GaiaProtocolConfig } from "gaiaprotocol";
@@ -11,7 +11,6 @@ import { GaiaProtocolConfig } from "gaiaprotocol";
 export default class GameScreenshotInput extends DomNode<HTMLDivElement, {
   changed: (screenshotUrls: string[]) => void;
 }> {
-  private invisibleFileInput: InvisibleFileInput;
   private screenshotContainer: DomNode;
   private screenshotUrls: string[] = [];
 
@@ -21,36 +20,12 @@ export default class GameScreenshotInput extends DomNode<HTMLDivElement, {
     this.screenshotUrls = screenshotUrls;
 
     this.append(
-      this.invisibleFileInput = new InvisibleFileInput({
-        accept: "image/*",
-        multiple: true,
-        onChange: (files) => {
-          if (files.length > 0) this.uploadScreenshots(files);
-        },
-      }),
-      el(
+      new FileDropzone(
         ".upload-area",
         {
-          onclick: () => this.invisibleFileInput.openFileSelector(),
-          ondragenter: (event) => {
-            event.preventDefault();
-            this.addClass("drag-hover");
-          },
-          ondragover: (event) => {
-            event.preventDefault();
-            this.addClass("drag-hover");
-            event.dataTransfer!.dropEffect = "copy";
-          },
-          ondragleave: () => {
-            this.removeClass("drag-hover");
-          },
-          ondrop: (event) => {
-            event.preventDefault();
-            this.removeClass("drag-hover");
-            if (event.dataTransfer!.files.length > 0) {
-              this.uploadScreenshots(event.dataTransfer!.files);
-            }
-          },
+          accept: "image/*",
+          multiple: true,
+          onUpload: (files) => this.uploadScreenshots(files),
         },
         el(".placeholder", "Click or Drag & Drop to add screenshots"),
         new UploadIcon(),
