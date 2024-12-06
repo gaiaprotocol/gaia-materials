@@ -61,6 +61,7 @@ export default class GameForm extends DomNode<HTMLDivElement, {
       el(
         ".description-input-container",
         new Input({
+          multiline: true,
           label: "Description",
           placeholder: "Enter game description",
           value: this.data.description,
