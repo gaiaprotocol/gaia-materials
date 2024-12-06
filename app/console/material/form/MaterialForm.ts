@@ -8,7 +8,17 @@ export default class MaterialForm extends DomNode<HTMLDivElement, {
   constructor(public data: MaterialEntity) {
     super(".material-form");
     this.append(
-      new LogoInput({ functionName: "upload-material-logo" }, {}),
+      new LogoInput({
+        functionName: "upload-material-logo",
+        onChange: (newLogo) => {
+          this.data.logo_image_url = newLogo.logoImageUrl;
+          this.data.logo_thumbnail_url = newLogo.logoThumbnailUrl;
+          this.emit("dataChanged", this.data);
+        },
+      }, {
+        logoImageUrl: this.data.logo_image_url,
+        logoThumbnailUrl: this.data.logo_thumbnail_url,
+      }),
       el(
         ".name-input-container",
         new Input({
