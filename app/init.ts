@@ -4,6 +4,7 @@ import AppConfig, { IAppConfig } from "./AppConfig.js";
 import ConsoleLayout from "./console/ConsoleLayout.js";
 import ConsoleView from "./console/ConsoleView.js";
 import ConsoleGameInfoView from "./console/game/ConsoleGameInfoView.js";
+import EditGameInfoView from "./console/game/EditGameInfoView.js";
 import NewGameView from "./console/game/NewGameView.js";
 import ConsoleMaterialInfoView from "./console/material/ConsoleMaterialInfoView.js";
 import NewMaterialView from "./console/material/NewMaterialView.js";
@@ -24,6 +25,7 @@ export default async function init(config: IAppConfig) {
     .add("/console", ConsoleView)
     .add("/console/new-game", NewGameView)
     .add("/console/game/:slug", ConsoleGameInfoView)
+    .add("/console/game/:slug/edit", EditGameInfoView)
     .add("/console/game/:slug/new-material", NewMaterialView)
     .add("/console/material/:address", ConsoleMaterialInfoView);
 }

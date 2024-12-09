@@ -1,7 +1,7 @@
 import { el, Router, View } from "@common-module/app";
 import { Button, ButtonType } from "@common-module/app-components";
 import { WalletLoginManager } from "@common-module/wallet-login";
-import { GameRepository } from "gaiaprotocol";
+import { GameDataManager } from "gaiaprotocol";
 import ConsoleLayout from "../ConsoleLayout.js";
 import GameForm from "./form/GameForm.js";
 
@@ -29,7 +29,7 @@ export default class NewGameView extends View {
     const data = this.form.data;
     data.owner = WalletLoginManager.getLoggedInAddress();
 
-    const game = await GameRepository.createGame(data);
+    const game = await GameDataManager.createGame(data);
     Router.go(`/console/game/${game.slug}`);
   }
 }

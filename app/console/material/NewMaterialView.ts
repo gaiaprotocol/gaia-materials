@@ -3,8 +3,8 @@ import { Button, ButtonType, ErrorDialog } from "@common-module/app-components";
 import {
   ContractEventsProcessor,
   GaiaProtocolConfig,
+  GameDataManager,
   GameEntity,
-  GameRepository,
   MaterialFactoryContract,
 } from "gaiaprotocol";
 import ConsoleLayout from "../ConsoleLayout.js";
@@ -41,11 +41,11 @@ export default class NewMaterialView extends View {
     );
   }
 
-  public async changeData(_data: { slug: string } | GameEntity) {
-    let data: GameEntity | undefined = _data as GameEntity;
-    if (!("id" in data)) data = await GameRepository.fetchBySlug(data.slug);
-    if (data?.id) {
-      this.form = new MaterialForm({ game_id: data.id }).appendTo(this.main);
+  public async changeData(data: { slug: string } | GameEntity) {
+    let game: GameEntity | undefined = data as GameEntity;
+    if (!("id" in data)) game = await GameDataManager.getGameBySlug(data.slug);
+    if (game?.id) {
+      this.form = new MaterialForm({ game_id: game.id }).appendTo(this.main);
     }
   }
 

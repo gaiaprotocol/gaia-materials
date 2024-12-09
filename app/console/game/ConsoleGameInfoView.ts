@@ -1,8 +1,8 @@
 import { el, Router, View } from "@common-module/app";
 import { Button, ButtonType } from "@common-module/app-components";
-import { GameRepository } from "gaiaprotocol";
+import { AddIcon, EditIcon } from "@gaiaprotocol/svg-icons";
+import { GameDataManager, GameEntity } from "gaiaprotocol";
 import ConsoleLayout from "../ConsoleLayout.js";
-import { AddIcon } from "@gaiaprotocol/svg-icons";
 
 export default class ConsoleGameInfoView extends View {
   constructor() {
@@ -12,11 +12,18 @@ export default class ConsoleGameInfoView extends View {
     );
   }
 
-  public async changeData(data: { slug: string }) {
-    const game = await GameRepository.fetchBySlug(data.slug);
+  public async changeData(data: { slug: string } | GameEntity) {
+    let game: GameEntity | undefined = data as GameEntity;
+    if (!("id" in data)) game = await GameDataManager.getGameBySlug(data.slug);
 
     this.container.append(
       JSON.stringify(game, null, 2),
+      new Button({
+        type: ButtonType.Contained,
+        icon: new EditIcon(),
+        title: "Edit game",
+        onClick: () => Router.go(`/console/game/${data.slug}/edit`, game),
+      }),
       new Button({
         type: ButtonType.Contained,
         icon: new AddIcon(),

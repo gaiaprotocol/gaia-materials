@@ -1272,6 +1272,11 @@ a.button {
     padding: 8px 16px;
   }
 }
+button > .loading-spinner,
+a.button > .loading-spinner {
+  width: 24px;
+  height: 24px;
+}
 button:has(>.icon-container),
 a.button:has(>.icon-container) {
   padding-left: 14px;
@@ -1768,6 +1773,9 @@ li.chat-message-list-item > main {
 .chat-message-edit-form > form > .actions > button > .icon-container > .icon {
   font-size: 20px;
 }
+li.chat-content-list-item.temp {
+  opacity: 0.5;
+}
 .logged-in-user-avatar-button {
   position: relative;
   min-width: 32px;
@@ -1845,10 +1853,14 @@ li.chat-message-list-item > main {
 .wallet-login-modal {
   max-width: 480px !important;
 }
+.wallet-connection-modal > main > .button-group > button,
+.wallet-login-modal > main > .button-group > button {
+  gap: 12px;
+}
 .wallet-connection-modal > main > .button-group > button > .icon-container,
 .wallet-login-modal > main > .button-group > button > .icon-container {
-  width: 32px;
-  height: 32px;
+  width: 40px;
+  height: 40px;
 }
 .network-mismatch-modal {
   max-width: 760px !important;
