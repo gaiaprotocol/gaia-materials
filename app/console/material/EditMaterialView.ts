@@ -1,4 +1,4 @@
-import { el, View } from "@common-module/app";
+import { el, Router, View } from "@common-module/app";
 import {
   Button,
   ButtonType,
@@ -100,5 +100,7 @@ export default class EditMaterialView extends View {
 
     await MaterialDataManager.updateMaterial(this.form.data);
     await this.syncMaterialMetadataToDB();
+
+    Router.go(`/console/material/${this.form.data.address}`, this.form.data);
   }
 }

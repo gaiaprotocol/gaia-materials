@@ -111,11 +111,13 @@ export default class MaterialForm extends DomNode<HTMLDivElement, {
     this._data = data ?? { game_id: -1 };
 
     Object.entries(this.inputs).forEach(([key, input]) => {
-      const value = this._data[key as keyof MaterialEntity];
       if (input instanceof Input) {
-        input.value = value as string ?? "";
+        input.value = this._data[key as keyof MaterialEntity] as string ?? "";
       } else if (input instanceof LogoInput) {
-        input.data = value as LogoData | undefined;
+        input.data = {
+          logoImageUrl: this._data.logo_image_url,
+          logoThumbnailUrl: this._data.logo_thumbnail_url,
+        };
       }
     });
   }
