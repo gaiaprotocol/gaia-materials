@@ -1,5 +1,5 @@
 import { el, Router, View } from "@common-module/app";
-import { Button, ButtonType } from "@common-module/app-components";
+import { Button, ButtonType, ErrorDialog } from "@common-module/app-components";
 import { GameDataManager, GameEntity } from "gaiaprotocol";
 import ConsoleLayout from "../ConsoleLayout.js";
 import GameForm from "./form/GameForm.js";
@@ -18,7 +18,17 @@ export default class EditGameInfoView extends View {
         new Button({
           type: ButtonType.Contained,
           title: "Save game",
-          onClick: () => this.saveGame(),
+          onClick: async () => {
+            try {
+              await this.saveGame();
+            } catch (error: any) {
+              new ErrorDialog({
+                title: "Error saving game",
+                message: error.message,
+              });
+              throw error;
+            }
+          },
         }),
       ),
     );
@@ -32,9 +42,9 @@ export default class EditGameInfoView extends View {
   }
 
   private async saveGame(): Promise<void> {
-    if (this.form.data) {
-      const game = await GameDataManager.updateGame(this.form.data);
-      Router.go(`/console/game/${game.slug}`);
-    }
+    if (!this.form.data) throw new Error("Game data is required");
+
+    const game = await GameDataManager.updateGame(this.form.data);
+    Router.go(`/console/game/${game.slug}`);
   }
 }

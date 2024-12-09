@@ -1,61 +1,85 @@
 import { DomNode, el } from "@common-module/app";
 import { Input } from "@common-module/app-components";
 import { LogoInput, MaterialEntity } from "gaiaprotocol";
+import { LogoData } from "gaiaprotocol/lib/form/LogoInput.js";
 
 export default class MaterialForm extends DomNode<HTMLDivElement, {
   dataChanged: (data: MaterialEntity) => void;
 }> {
-  constructor(public data: MaterialEntity) {
+  private _data!: MaterialEntity;
+
+  private readonly inputs: {
+    logo?: LogoInput;
+    name?: Input;
+    symbol?: Input;
+    description?: Input;
+  } = {};
+
+  constructor(initialData?: MaterialEntity) {
     super(".material-form");
+
     this.append(
-      new LogoInput({
+      this.inputs.logo = new LogoInput({
         functionName: "upload-material-logo",
         onChange: (newLogo) => {
-          this.data.logo_image_url = newLogo.logoImageUrl;
-          this.data.logo_thumbnail_url = newLogo.logoThumbnailUrl;
-          this.emit("dataChanged", this.data);
+          this._data.logo_image_url = newLogo?.logoImageUrl;
+          this._data.logo_thumbnail_url = newLogo?.logoThumbnailUrl;
+          this.emit("dataChanged", this._data);
         },
-      }, {
-        logoImageUrl: this.data.logo_image_url,
-        logoThumbnailUrl: this.data.logo_thumbnail_url,
       }),
       el(
         ".name-input-container",
-        new Input({
+        this.inputs.name = new Input({
           label: "Name",
           placeholder: "Enter material name",
-          value: this.data.name,
           onChange: (newValue) => {
-            this.data.name = newValue;
-            this.emit("dataChanged", this.data);
+            this._data.name = newValue;
+            this.emit("dataChanged", this._data);
           },
         }),
       ),
       el(
         ".symbol-input-container",
-        new Input({
+        this.inputs.symbol = new Input({
           label: "Symbol",
           placeholder: "Enter material symbol",
-          value: this.data.symbol,
           onChange: (newValue) => {
-            this.data.symbol = newValue;
-            this.emit("dataChanged", this.data);
+            this._data.symbol = newValue;
+            this.emit("dataChanged", this._data);
           },
         }),
       ),
       el(
         ".description-input-container",
-        new Input({
+        this.inputs.description = new Input({
           multiline: true,
           label: "Description",
           placeholder: "Enter material description",
-          value: this.data.description,
           onChange: (newValue) => {
-            this.data.description = newValue;
-            this.emit("dataChanged", this.data);
+            this._data.description = newValue;
+            this.emit("dataChanged", this._data);
           },
         }),
       ),
     );
+
+    this.data = initialData;
+  }
+
+  public get data(): MaterialEntity | undefined {
+    return this._data;
+  }
+
+  public set data(data: MaterialEntity | undefined) {
+    this._data = data ?? { game_id: -1 };
+
+    Object.entries(this.inputs).forEach(([key, input]) => {
+      const value = this._data[key as keyof MaterialEntity];
+      if (input instanceof Input) {
+        input.value = value as string ?? "";
+      } else if (input instanceof LogoInput) {
+        input.data = value as LogoData | undefined;
+      }
+    });
   }
 }

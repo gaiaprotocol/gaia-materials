@@ -1,5 +1,5 @@
 import { el, Router, View } from "@common-module/app";
-import { Button, ButtonType } from "@common-module/app-components";
+import { Button, ButtonType, ErrorDialog } from "@common-module/app-components";
 import { WalletLoginManager } from "@common-module/wallet-login";
 import { GameDataManager } from "gaiaprotocol";
 import ConsoleLayout from "../ConsoleLayout.js";
@@ -19,7 +19,17 @@ export default class NewGameView extends View {
         new Button({
           type: ButtonType.Contained,
           title: "Create game",
-          onClick: () => this.createGame(),
+          onClick: async () => {
+            try {
+              await this.createGame();
+            } catch (error: any) {
+              new ErrorDialog({
+                title: "Error creating game",
+                message: error.message,
+              });
+              throw error;
+            }
+          },
         }),
       ),
     );
@@ -27,10 +37,10 @@ export default class NewGameView extends View {
 
   private async createGame(): Promise<void> {
     const data = this.form.data;
-    if (data) {
-      data.owner = WalletLoginManager.getLoggedInAddress();
-      const game = await GameDataManager.createGame(data);
-      Router.go(`/console/game/${game.slug}`);
-    }
+    if (!data) throw new Error("Game data is required");
+
+    data.owner = WalletLoginManager.getLoggedInAddress();
+    const game = await GameDataManager.createGame(data);
+    Router.go(`/console/game/${game.slug}`);
   }
 }

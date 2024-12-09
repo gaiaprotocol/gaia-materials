@@ -8,13 +8,20 @@ import {
 import { DeleteIcon, UploadIcon } from "@gaiaprotocol/svg-icons";
 import { GaiaProtocolConfig } from "gaiaprotocol";
 
+interface GameThumbnailInputOptions {
+  onChange: (value: string | undefined) => void;
+}
+
 export default class GameThumbnailInput extends DomNode<HTMLDivElement, {
-  valueChanged: (value: string | undefined) => void;
+  urlChanged: (value: string | undefined) => void;
 }> {
   private thumbnailDisplay: FileDropzone;
-  private _value?: string;
+  private _thumbnailUrl?: string;
 
-  constructor(initialValue?: string) {
+  constructor(
+    private options: GameThumbnailInputOptions,
+    initialValue?: string,
+  ) {
     super(".game-thumbnail-input");
 
     this.append(
@@ -30,11 +37,11 @@ export default class GameThumbnailInput extends DomNode<HTMLDivElement, {
       new Button(".clear", {
         type: ButtonType.Circle,
         icon: new DeleteIcon(),
-        onClick: () => this.value = undefined,
+        onClick: () => this.thumbnailUrl = undefined,
       }),
     );
 
-    this.value = initialValue;
+    this.thumbnailUrl = initialValue;
   }
 
   private async optimizeAndUploadImage(file: File, maxSize: number) {
@@ -60,17 +67,19 @@ export default class GameThumbnailInput extends DomNode<HTMLDivElement, {
     const loadingSpinner = new AppCompConfig.LoadingSpinner().appendTo(this);
 
     const thumbnailImageUrl = await this.optimizeAndUploadImage(file, 720);
-    this.value = thumbnailImageUrl;
+    this.thumbnailUrl = thumbnailImageUrl;
 
     loadingSpinner.remove();
   }
 
-  public get value(): string | undefined {
-    return this._value;
+  public get thumbnailUrl(): string | undefined {
+    return this._thumbnailUrl;
   }
 
-  public set value(thumbnailUrl: string | undefined) {
-    this._value = thumbnailUrl;
+  public set thumbnailUrl(thumbnailUrl: string | undefined) {
+    if (thumbnailUrl === this._thumbnailUrl) return;
+
+    this._thumbnailUrl = thumbnailUrl;
 
     if (thumbnailUrl) {
       this.thumbnailDisplay.style({ backgroundImage: `url(${thumbnailUrl})` });
@@ -80,6 +89,7 @@ export default class GameThumbnailInput extends DomNode<HTMLDivElement, {
       this.removeClass("has-thumbnail");
     }
 
-    this.emit("valueChanged", thumbnailUrl);
+    this.options.onChange(thumbnailUrl);
+    this.emit("urlChanged", thumbnailUrl);
   }
 }

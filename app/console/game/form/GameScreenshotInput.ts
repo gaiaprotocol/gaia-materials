@@ -4,13 +4,20 @@ import { UploadIcon } from "@gaiaprotocol/svg-icons";
 import { GaiaProtocolConfig } from "gaiaprotocol";
 import GameFormScreenshotList from "./GameFormScreenshotList.js";
 
+interface GameScreenshotInputOptions {
+  onChange: (value: string[]) => void;
+}
+
 export default class GameScreenshotInput extends DomNode<HTMLDivElement, {
-  valueChanged: (value: string[]) => void;
+  urlsChanged: (value: string[]) => void;
 }> {
   private uploadArea: FileDropzone;
   private screenshotList: GameFormScreenshotList;
 
-  constructor(initialValue: string[] = []) {
+  constructor(
+    options: GameScreenshotInputOptions,
+    initialValue: string[] = [],
+  ) {
     super(".game-screenshot-input");
 
     this.append(
@@ -32,9 +39,13 @@ export default class GameScreenshotInput extends DomNode<HTMLDivElement, {
 
     this.screenshotList.on(
       "urlsChanged",
-      (urls) => this.emit("valueChanged", urls),
+      (urls) => {
+        options.onChange(urls);
+        this.emit("urlsChanged", urls);
+      },
     );
-    this.value = initialValue;
+
+    this.screenshotUrls = initialValue;
   }
 
   private async optimizeAndUploadImage(file: File, maxSize: number) {
@@ -70,11 +81,11 @@ export default class GameScreenshotInput extends DomNode<HTMLDivElement, {
     loadingSpinner.remove();
   }
 
-  public get value(): string[] {
+  public get screenshotUrls(): string[] {
     return this.screenshotList.urls;
   }
 
-  public set value(urls: string[]) {
+  public set screenshotUrls(urls: string[]) {
     this.screenshotList.urls = urls;
   }
 }

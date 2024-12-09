@@ -1,12 +1,36 @@
 import { el, View } from "@common-module/app";
+import { Button, ButtonType, ErrorDialog } from "@common-module/app-components";
 import { MaterialDataManager, MaterialEntity } from "gaiaprotocol";
 import ConsoleLayout from "../ConsoleLayout.js";
+import MaterialForm from "./form/MaterialForm.js";
 
 export default class EditMaterialView extends View {
+  private form: MaterialForm;
+
   constructor() {
     super();
     ConsoleLayout.content = this.container = el(
-      ".edit-material-view",
+      ".new-material-view",
+      el("header", el("h2", "Edit material")),
+      el("main", this.form = new MaterialForm()),
+      el(
+        "footer",
+        new Button({
+          type: ButtonType.Contained,
+          title: "Save Material",
+          onClick: async () => {
+            try {
+              await this.saveMaterial();
+            } catch (error: any) {
+              new ErrorDialog({
+                title: "Error saving material",
+                message: error.message,
+              });
+              throw error;
+            }
+          },
+        }),
+      ),
     );
   }
 
@@ -16,8 +40,12 @@ export default class EditMaterialView extends View {
       material = await MaterialDataManager.getMaterial(data.address);
     }
 
-    this.container.append(
-      JSON.stringify(material, null, 2),
-    );
+    this.form.data = material;
+  }
+
+  private async saveMaterial(): Promise<void> {
+    if (!this.form.data) throw new Error("Material data is required");
+
+    //TODO: Implement saveMaterial
   }
 }

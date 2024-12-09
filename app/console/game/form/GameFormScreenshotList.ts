@@ -1,4 +1,5 @@
 import { DomNode } from "@common-module/app";
+import { ObjectUtils } from "../../../../../ts-module/lib/index.js";
 import GameFormScreenshotListItem from "./GameFormScreenshotListItem.js";
 
 export default class GameFormScreenshotList extends DomNode<HTMLDivElement, {
@@ -51,6 +52,8 @@ export default class GameFormScreenshotList extends DomNode<HTMLDivElement, {
   }
 
   public set urls(urls: string[]) {
+    if (ObjectUtils.isEqual(this._urls, urls)) return;
+
     this._urls = urls;
     this.clear();
     for (const url of urls) {
