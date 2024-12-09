@@ -10,7 +10,7 @@ export default class EditGameInfoView extends View {
   constructor() {
     super();
     ConsoleLayout.content = this.container = el(
-      ".edit-game-view",
+      ".edit-game-info-view",
       el("header", el("h2", "Edit game")),
       el("main", this.form = new GameForm()),
       el(

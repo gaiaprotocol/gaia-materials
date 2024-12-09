@@ -2216,6 +2216,21 @@ li.chat-content-list-item.temp {
 .new-game-view > footer > button {
   width: 100%;
 }
+.edit-game-info-view {
+  max-width: 600px;
+  margin: 40px auto 80px;
+  padding: 0 16px;
+}
+.edit-game-info-view > header {
+  font-size: 32px;
+  text-align: center;
+}
+.edit-game-info-view > main {
+  padding: 80px 0 72px;
+}
+.edit-game-info-view > footer > button {
+  width: 100%;
+}
 .game-form {
   display: flex;
   flex-direction: column;
@@ -2242,6 +2257,8 @@ li.chat-content-list-item.temp {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  width: 24px;
+  height: 24px;
 }
 .game-thumbnail-input > .thumbnail-display {
   height: 240px;
@@ -2330,6 +2347,8 @@ li.chat-content-list-item.temp {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  width: 24px;
+  height: 24px;
 }
 .game-screenshot-input > .screenshot-container {
   width: 100%;
