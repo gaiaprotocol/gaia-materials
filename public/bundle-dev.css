@@ -1626,15 +1626,22 @@ dialog.modal.structured-modal > footer {
   }
 }
 dialog.modal.alert-dialog > header > h1,
-dialog.modal.confirm-dialog > header > h1 {
+dialog.modal.confirm-dialog > header > h1,
+dialog.modal.prompt-dialog > header > h1 {
   display: flex;
   align-items: center;
   gap: 12px;
 }
 dialog.modal.alert-dialog > header > h1 > .icon,
-dialog.modal.confirm-dialog > header > h1 > .icon {
+dialog.modal.confirm-dialog > header > h1 > .icon,
+dialog.modal.prompt-dialog > header > h1 > .icon {
   width: 32px;
   height: 32px;
+}
+dialog.modal.prompt-dialog > main {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 .accordion-item {
   border-bottom: 1px solid var(--line-color);
