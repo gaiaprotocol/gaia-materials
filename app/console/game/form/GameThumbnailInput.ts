@@ -12,8 +12,9 @@ export default class GameThumbnailInput extends DomNode<HTMLDivElement, {
   changed: (thumbnailUrl: string | undefined) => void;
 }> {
   private thumbnailDisplay: FileDropzone;
+  private _value?: string;
 
-  constructor(private thumbnailUrl?: string) {
+  constructor(thumbnailUrl?: string) {
     super(".game-thumbnail-input");
 
     this.append(
@@ -29,9 +30,11 @@ export default class GameThumbnailInput extends DomNode<HTMLDivElement, {
       new Button(".clear", {
         type: ButtonType.Circle,
         icon: new DeleteIcon(),
-        onClick: () => this.clearThumbnail(),
+        onClick: () => this.value = undefined,
       }),
     );
+
+    this.value = thumbnailUrl;
   }
 
   private async optimizeAndUploadImage(file: File, maxSize: number) {
@@ -57,21 +60,26 @@ export default class GameThumbnailInput extends DomNode<HTMLDivElement, {
     const loadingSpinner = new AppCompConfig.LoadingSpinner().appendTo(this);
 
     const thumbnailImageUrl = await this.optimizeAndUploadImage(file, 720);
-    this.thumbnailUrl = thumbnailImageUrl;
-    this.emit("changed", this.thumbnailUrl);
-
-    this.thumbnailDisplay.style({
-      backgroundImage: `url(${thumbnailImageUrl})`,
-    });
-    this.addClass("has-thumbnail");
+    this.value = thumbnailImageUrl;
 
     loadingSpinner.remove();
   }
 
-  private clearThumbnail() {
-    this.thumbnailUrl = undefined;
-    this.emit("changed", this.thumbnailUrl);
-    this.thumbnailDisplay.style({ backgroundImage: "" });
-    this.removeClass("has-thumbnail");
+  public get value(): string | undefined {
+    return this._value;
+  }
+
+  public set value(thumbnailUrl: string | undefined) {
+    this._value = thumbnailUrl;
+
+    if (thumbnailUrl) {
+      this.thumbnailDisplay.style({
+        backgroundImage: `url(${thumbnailUrl})`,
+      });
+      this.addClass("has-thumbnail");
+    } else {
+      this.thumbnailDisplay.style({ backgroundImage: "" });
+      this.removeClass("has-thumbnail");
+    }
   }
 }

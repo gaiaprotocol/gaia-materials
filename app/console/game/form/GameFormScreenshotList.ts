@@ -5,15 +5,11 @@ export default class GameFormScreenshotList extends DomNode<HTMLDivElement, {
   changed: (screenshotUrls: string[]) => void;
 }> {
   public children: GameFormScreenshotListItem[] = [];
-  private screenshotUrls: string[] = [];
+
+  private _screenshotUrls: string[] = [];
 
   constructor(screenshotUrls: string[] = []) {
     super(".game-form-screenshot-list");
-    this.screenshotUrls = screenshotUrls;
-
-    this.screenshotUrls.forEach((url) => {
-      this.addScreenshotItem(url);
-    });
 
     this.onDom("dragover", (event) => {
       event.preventDefault();
@@ -34,25 +30,38 @@ export default class GameFormScreenshotList extends DomNode<HTMLDivElement, {
         draggingItem.appendTo(this);
       }
 
-      this.updateScreenshotUrls();
+      this._screenshotUrls = this.children.map((item) => item.url);
+      this.emit("changed", this._screenshotUrls);
     });
+
+    this.screenshotUrls = screenshotUrls;
   }
 
-  public addScreenshotItem(url: string) {
+  private addScreenshotItem(url: string) {
     const item = new GameFormScreenshotListItem(url);
     item.on("remove", () => {
-      this.screenshotUrls = this.screenshotUrls.filter((u) => u !== url);
-      this.emit("changed", this.screenshotUrls);
+      this._screenshotUrls = this._screenshotUrls.filter((u) => u !== url);
+      this.emit("changed", this._screenshotUrls);
     });
     this.append(item);
   }
 
-  private updateScreenshotUrls() {
-    this.screenshotUrls = this.children.map((item) => item.url);
-    this.emit("changed", this.screenshotUrls);
+  public get screenshotUrls() {
+    return this._screenshotUrls;
   }
 
-  public getScreenshotUrls() {
-    return this.screenshotUrls;
+  public set screenshotUrls(screenshotUrls: string[]) {
+    this._screenshotUrls = screenshotUrls;
+    this.clear();
+    for (const url of screenshotUrls) {
+      this.addScreenshotItem(url);
+    }
+    this.emit("changed", this._screenshotUrls);
+  }
+
+  public addScreenshot(url: string) {
+    this._screenshotUrls.push(url);
+    this.addScreenshotItem(url);
+    this.emit("changed", this._screenshotUrls);
   }
 }

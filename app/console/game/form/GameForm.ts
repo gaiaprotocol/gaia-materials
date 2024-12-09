@@ -9,13 +9,15 @@ export default class GameForm extends DomNode<HTMLDivElement, {
 }> {
   private _data!: GameEntity;
 
-  private nameInput: Input;
-  private slugInput: Input;
-  private summaryInput: Input;
-  private descriptionInput: Input;
-  private thumbnailInput: GameThumbnailInput;
-  private screenshotInput: GameScreenshotInput;
-  private trailerInput: Input;
+  private readonly formInputs: {
+    name?: Input;
+    slug?: Input;
+    summary?: Input;
+    description?: Input;
+    thumbnail?: GameThumbnailInput;
+    screenshots?: GameScreenshotInput;
+    trailer?: Input;
+  } = {};
 
   constructor(data?: GameEntity) {
     super(".game-form");
@@ -23,7 +25,7 @@ export default class GameForm extends DomNode<HTMLDivElement, {
     this.append(
       el(
         ".name-input-container",
-        this.nameInput = new Input({
+        this.formInputs.name = new Input({
           label: "Name",
           placeholder: "Enter game name",
           onChange: (newValue) => {
@@ -34,7 +36,7 @@ export default class GameForm extends DomNode<HTMLDivElement, {
       ),
       el(
         ".slug-input-container",
-        this.slugInput = new Input({
+        this.formInputs.slug = new Input({
           label: "Slug",
           placeholder: "Enter game slug (URL)",
           onChange: (newValue) => {
@@ -45,7 +47,7 @@ export default class GameForm extends DomNode<HTMLDivElement, {
       ),
       el(
         ".summary-input-container",
-        this.summaryInput = new Input({
+        this.formInputs.summary = new Input({
           label: "Summary",
           placeholder: "Enter game summary",
           onChange: (newValue) => {
@@ -56,7 +58,7 @@ export default class GameForm extends DomNode<HTMLDivElement, {
       ),
       el(
         ".description-input-container",
-        this.descriptionInput = new Input({
+        this.formInputs.summary = new Input({
           multiline: true,
           label: "Description",
           placeholder: "Enter game description",
@@ -69,16 +71,16 @@ export default class GameForm extends DomNode<HTMLDivElement, {
       el(
         ".thumbnail-input-container",
         el("label", "Thumbnail"),
-        this.thumbnailInput = new GameThumbnailInput(),
+        this.formInputs.thumbnail = new GameThumbnailInput(),
       ),
       el(
         ".screenshot-input-container",
         el("label", "Screenshots"),
-        this.screenshotInput = new GameScreenshotInput(),
+        this.formInputs.screenshots = new GameScreenshotInput(),
       ),
       el(
         ".trailer-input-container",
-        this.trailerInput = new Input({
+        this.formInputs.trailer = new Input({
           label: "Trailer",
           placeholder: "Enter game trailer URL",
           onChange: (newValue) => {
@@ -99,13 +101,10 @@ export default class GameForm extends DomNode<HTMLDivElement, {
 
   public set data(data: GameEntity) {
     this._data = data;
-
-    this.nameInput.value = data.name;
-    this.slugInput.value = data.slug;
-    this.summaryInput.value = data.summary ?? "";
-    this.descriptionInput.value = data.description ?? "";
-    this.thumbnailInput.value = data.thumbnail_url ?? "";
-    this.screenshotInput.value = data.screenshots;
-    this.trailerInput.value = data.trailer_url ?? "";
+    Object.entries(this.formInputs).forEach(([key, input]) => {
+      if (data[key as keyof GameEntity]) {
+        input.value = data[key as keyof GameEntity];
+      }
+    });
   }
 }
