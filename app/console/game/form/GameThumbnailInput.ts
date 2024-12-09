@@ -9,12 +9,12 @@ import { DeleteIcon, UploadIcon } from "@gaiaprotocol/svg-icons";
 import { GaiaProtocolConfig } from "gaiaprotocol";
 
 export default class GameThumbnailInput extends DomNode<HTMLDivElement, {
-  changed: (thumbnailUrl: string | undefined) => void;
+  valueChanged: (value: string | undefined) => void;
 }> {
   private thumbnailDisplay: FileDropzone;
   private _value?: string;
 
-  constructor(thumbnailUrl?: string) {
+  constructor(initialValue?: string) {
     super(".game-thumbnail-input");
 
     this.append(
@@ -34,7 +34,7 @@ export default class GameThumbnailInput extends DomNode<HTMLDivElement, {
       }),
     );
 
-    this.value = thumbnailUrl;
+    this.value = initialValue;
   }
 
   private async optimizeAndUploadImage(file: File, maxSize: number) {
@@ -73,13 +73,13 @@ export default class GameThumbnailInput extends DomNode<HTMLDivElement, {
     this._value = thumbnailUrl;
 
     if (thumbnailUrl) {
-      this.thumbnailDisplay.style({
-        backgroundImage: `url(${thumbnailUrl})`,
-      });
+      this.thumbnailDisplay.style({ backgroundImage: `url(${thumbnailUrl})` });
       this.addClass("has-thumbnail");
     } else {
       this.thumbnailDisplay.style({ backgroundImage: "" });
       this.removeClass("has-thumbnail");
     }
+
+    this.emit("valueChanged", thumbnailUrl);
   }
 }

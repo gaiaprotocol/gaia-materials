@@ -32,7 +32,9 @@ export default class EditGameInfoView extends View {
   }
 
   private async saveGame(): Promise<void> {
-    const game = await GameDataManager.updateGame(this.form.data);
-    Router.go(`/console/game/${game.slug}`);
+    if (this.form.data) {
+      const game = await GameDataManager.updateGame(this.form.data);
+      Router.go(`/console/game/${game.slug}`);
+    }
   }
 }

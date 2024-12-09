@@ -19,7 +19,7 @@ export default class GameForm extends DomNode<HTMLDivElement, {
     trailer?: Input;
   } = {};
 
-  constructor(data?: GameEntity) {
+  constructor(initialData?: GameEntity) {
     super(".game-form");
 
     this.append(
@@ -29,8 +29,8 @@ export default class GameForm extends DomNode<HTMLDivElement, {
           label: "Name",
           placeholder: "Enter game name",
           onChange: (newValue) => {
-            this.data.name = newValue;
-            this.emit("dataChanged", this.data);
+            this._data.name = newValue;
+            this.emit("dataChanged", this._data);
           },
         }),
       ),
@@ -40,8 +40,8 @@ export default class GameForm extends DomNode<HTMLDivElement, {
           label: "Slug",
           placeholder: "Enter game slug (URL)",
           onChange: (newValue) => {
-            this.data.slug = newValue;
-            this.emit("dataChanged", this.data);
+            this._data.slug = newValue;
+            this.emit("dataChanged", this._data);
           },
         }),
       ),
@@ -51,8 +51,8 @@ export default class GameForm extends DomNode<HTMLDivElement, {
           label: "Summary",
           placeholder: "Enter game summary",
           onChange: (newValue) => {
-            this.data.summary = newValue;
-            this.emit("dataChanged", this.data);
+            this._data.summary = newValue;
+            this.emit("dataChanged", this._data);
           },
         }),
       ),
@@ -63,8 +63,8 @@ export default class GameForm extends DomNode<HTMLDivElement, {
           label: "Description",
           placeholder: "Enter game description",
           onChange: (newValue) => {
-            this.data.description = newValue;
-            this.emit("dataChanged", this.data);
+            this._data.description = newValue;
+            this.emit("dataChanged", this._data);
           },
         }),
       ),
@@ -84,26 +84,41 @@ export default class GameForm extends DomNode<HTMLDivElement, {
           label: "Trailer",
           placeholder: "Enter game trailer URL",
           onChange: (newValue) => {
-            this.data.trailer_url = newValue;
-            this.emit("dataChanged", this.data);
+            this._data.trailer_url = newValue;
+            this.emit("dataChanged", this._data);
           },
         }),
       ),
     );
 
-    if (data) this.data = data;
-    else this.data = { name: "", slug: "", screenshots: [] };
+    this.formInputs.thumbnail.on("valueChanged", (newValue) => {
+      this._data.thumbnail_url = newValue;
+      this.emit("dataChanged", this._data);
+    });
+
+    this.formInputs.screenshots.on("valueChanged", (newValue) => {
+      this._data.screenshots = newValue;
+      this.emit("dataChanged", this._data);
+    });
+
+    this.data = initialData;
   }
 
-  public get data(): GameEntity {
+  public get data(): GameEntity | undefined {
     return this._data;
   }
 
-  public set data(data: GameEntity) {
-    this._data = data;
+  public set data(data: GameEntity | undefined) {
+    this._data = data ?? { name: "", slug: "", screenshots: [] };
+
     Object.entries(this.formInputs).forEach(([key, input]) => {
-      if (data[key as keyof GameEntity]) {
-        input.value = data[key as keyof GameEntity];
+      const value = this._data[key as keyof GameEntity];
+      if (input instanceof Input) {
+        input.value = value as string ?? "";
+      } else if (input instanceof GameThumbnailInput) {
+        input.value = value as string | undefined;
+      } else if (input instanceof GameScreenshotInput) {
+        input.value = value as string[];
       }
     });
   }

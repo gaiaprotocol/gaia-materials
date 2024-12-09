@@ -5,13 +5,12 @@ import { GaiaProtocolConfig } from "gaiaprotocol";
 import GameFormScreenshotList from "./GameFormScreenshotList.js";
 
 export default class GameScreenshotInput extends DomNode<HTMLDivElement, {
-  changed: (screenshotUrls: string[]) => void;
+  valueChanged: (value: string[]) => void;
 }> {
   private uploadArea: FileDropzone;
   private screenshotList: GameFormScreenshotList;
-  private _value: string[] = [];
 
-  constructor(screenshotUrls: string[] = []) {
+  constructor(initialValue: string[] = []) {
     super(".game-screenshot-input");
 
     this.append(
@@ -31,12 +30,11 @@ export default class GameScreenshotInput extends DomNode<HTMLDivElement, {
       ),
     );
 
-    this.screenshotList.on("changed", (urls) => {
-      this.value = urls;
-      this.emit("changed", urls);
-    });
-
-    this.value = screenshotUrls;
+    this.screenshotList.on(
+      "urlsChanged",
+      (urls) => this.emit("valueChanged", urls),
+    );
+    this.value = initialValue;
   }
 
   private async optimizeAndUploadImage(file: File, maxSize: number) {
@@ -65,21 +63,18 @@ export default class GameScreenshotInput extends DomNode<HTMLDivElement, {
 
     const uploadPromises = Array.from(files).map(async (file) => {
       const screenshotUrl = await this.optimizeAndUploadImage(file, 1280);
-      this.screenshotList.addScreenshotItem(screenshotUrl);
-      this._value = [...this._value, screenshotUrl];
+      this.screenshotList.add(screenshotUrl);
     });
 
     await Promise.all(uploadPromises);
-    this.emit("changed", this._value);
     loadingSpinner.remove();
   }
 
   public get value(): string[] {
-    return [...this._value];
+    return this.screenshotList.urls;
   }
 
   public set value(urls: string[]) {
-    this._value = [...urls];
-    this.screenshotList.updateScreenshots(urls);
+    this.screenshotList.urls = urls;
   }
 }

@@ -27,9 +27,10 @@ export default class NewGameView extends View {
 
   private async createGame(): Promise<void> {
     const data = this.form.data;
-    data.owner = WalletLoginManager.getLoggedInAddress();
-
-    const game = await GameDataManager.createGame(data);
-    Router.go(`/console/game/${game.slug}`);
+    if (data) {
+      data.owner = WalletLoginManager.getLoggedInAddress();
+      const game = await GameDataManager.createGame(data);
+      Router.go(`/console/game/${game.slug}`);
+    }
   }
 }
