@@ -12,7 +12,7 @@ export default class EditMaterialView extends View {
     ConsoleLayout.content = this.container = el(
       ".new-material-view",
       el("header", el("h2", "Edit material")),
-      el("main", this.form = new MaterialForm()),
+      el("main", this.form = new MaterialForm({ editMode: true })),
       el(
         "footer",
         new Button({

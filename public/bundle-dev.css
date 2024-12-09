@@ -2435,4 +2435,18 @@ li.chat-content-list-item.temp {
 .material-form > .logo-input {
   margin: 0 auto;
 }
+.material-form > .name-input-container > label,
+.material-form > .symbol-input-container > label {
+  font-size: 15.14px;
+}
+.material-form > .name-input-container > .input-container,
+.material-form > .symbol-input-container > .input-container {
+  margin-top: 9px;
+  display: flex;
+  gap: 16px;
+}
+.material-form > .name-input-container > .input-container > .input,
+.material-form > .symbol-input-container > .input-container > .input {
+  flex-grow: 1;
+}
 

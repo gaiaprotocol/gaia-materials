@@ -1,7 +1,11 @@
 import { DomNode, el } from "@common-module/app";
-import { Input } from "@common-module/app-components";
+import { Button, ButtonType, Input } from "@common-module/app-components";
 import { LogoInput, MaterialEntity } from "gaiaprotocol";
 import { LogoData } from "gaiaprotocol/lib/form/LogoInput.js";
+
+interface MaterialFormOptions {
+  editMode?: boolean;
+}
 
 export default class MaterialForm extends DomNode<HTMLDivElement, {
   dataChanged: (data: MaterialEntity) => void;
@@ -15,7 +19,7 @@ export default class MaterialForm extends DomNode<HTMLDivElement, {
     description?: Input;
   } = {};
 
-  constructor(initialData?: MaterialEntity) {
+  constructor(options: MaterialFormOptions, initialData?: MaterialEntity) {
     super(".material-form");
 
     this.append(
@@ -27,28 +31,61 @@ export default class MaterialForm extends DomNode<HTMLDivElement, {
           this.emit("dataChanged", this._data);
         },
       }),
-      el(
-        ".name-input-container",
-        this.inputs.name = new Input({
-          label: "Name",
-          placeholder: "Enter material name",
-          onChange: (newValue) => {
-            this._data.name = newValue;
-            this.emit("dataChanged", this._data);
-          },
-        }),
-      ),
-      el(
-        ".symbol-input-container",
-        this.inputs.symbol = new Input({
-          label: "Symbol",
-          placeholder: "Enter material symbol",
-          onChange: (newValue) => {
-            this._data.symbol = newValue;
-            this.emit("dataChanged", this._data);
-          },
-        }),
-      ),
+      ...options.editMode
+        ? [
+          el(
+            ".name-input-container",
+            el("label", "Name"),
+            el(
+              ".input-container",
+              this.inputs.name = new Input({ readOnly: true }),
+              new Button(".edit", {
+                type: ButtonType.Contained,
+                title: "Edit",
+                onClick: () => {
+                },
+              }),
+            ),
+          ),
+          el(
+            ".symbol-input-container",
+            el("label", "Symbol"),
+            el(
+              ".input-container",
+              this.inputs.symbol = new Input({ readOnly: true }),
+              new Button(".edit", {
+                type: ButtonType.Contained,
+                title: "Edit",
+                onClick: () => {
+                },
+              }),
+            ),
+          ),
+        ]
+        : [
+          el(
+            ".name-input-container",
+            this.inputs.name = new Input({
+              label: "Name",
+              placeholder: "Enter material name",
+              onChange: (newValue) => {
+                this._data.name = newValue;
+                this.emit("dataChanged", this._data);
+              },
+            }),
+          ),
+          el(
+            ".symbol-input-container",
+            this.inputs.symbol = new Input({
+              label: "Symbol",
+              placeholder: "Enter material symbol",
+              onChange: (newValue) => {
+                this._data.symbol = newValue;
+                this.emit("dataChanged", this._data);
+              },
+            }),
+          ),
+        ],
       el(
         ".description-input-container",
         this.inputs.description = new Input({

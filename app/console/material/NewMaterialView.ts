@@ -18,7 +18,7 @@ export default class NewMaterialView extends View {
     ConsoleLayout.content = this.container = el(
       ".new-material-view",
       el("header", el("h2", "Create a new material")),
-      el("main", this.form = new MaterialForm()),
+      el("main", this.form = new MaterialForm({})),
       el(
         "footer",
         new Button({
