@@ -7,6 +7,7 @@ import ConsoleGameInfoView from "./console/game/ConsoleGameInfoView.js";
 import EditGameInfoView from "./console/game/EditGameInfoView.js";
 import NewGameView from "./console/game/NewGameView.js";
 import ConsoleMaterialInfoView from "./console/material/ConsoleMaterialInfoView.js";
+import EditMaterialView from "./console/material/EditMaterialView.js";
 import NewMaterialView from "./console/material/NewMaterialView.js";
 import GameInfoView from "./views/GameInfoView.js";
 import HomeView from "./views/HomeView.js";
@@ -27,5 +28,6 @@ export default async function init(config: IAppConfig) {
     .add("/console/game/:slug", ConsoleGameInfoView)
     .add("/console/game/:slug/edit", EditGameInfoView)
     .add("/console/game/:slug/new-material", NewMaterialView)
-    .add("/console/material/:address", ConsoleMaterialInfoView);
+    .add("/console/material/:address", ConsoleMaterialInfoView)
+    .add("/console/material/:address/edit", EditMaterialView);
 }

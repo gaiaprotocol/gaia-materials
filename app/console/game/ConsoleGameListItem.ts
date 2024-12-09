@@ -9,6 +9,6 @@ export default class ConsoleGameListItem extends DomNode {
       el("h3", game.name),
     );
 
-    this.onDom("click", () => Router.go(`/console/game/${game.slug}`));
+    this.onDom("click", () => Router.go(`/console/game/${game.slug}`, game));
   }
 }
