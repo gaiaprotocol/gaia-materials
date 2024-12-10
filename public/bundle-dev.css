@@ -1127,7 +1127,7 @@ button.contained .material-loading-spinner > svg > circle {
   --error-alert-icon-color: #f44336;
   --error-alert-text-color: #f4c7c7;
   --text-button-text-color: #fff;
-  --text-button-hover-bg-color: rgba(255, 255, 255, 0.08);
+  --text-button-hover-bg-color: rgba(255, 255, 255, 0.2);
   --text-button-disabled-text-color: rgba(255, 255, 255, 0.26);
   --contained-button-bg-color: #fff;
   --contained-button-text-color: #000;
@@ -1656,6 +1656,51 @@ dialog.modal.prompt-dialog > main {
 .accordion-item > .content {
   padding-bottom: 15px;
 }
+.tab-group {
+  position: relative;
+  display: flex;
+}
+.tab-group > .tab-background {
+  position: absolute;
+  inset: 0;
+  background: white;
+  transition: clip-path 0.2s ease-out;
+}
+.tab-group > .tab {
+  z-index: 1;
+}
+.tab {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 8px 22px;
+  min-height: 40px;
+  font-size: 15px;
+  transition: background-color 0.2s linear;
+  border-radius: 9999px;
+  background-color: transparent;
+  color: var(--text-button-text-color);
+}
+@container (width <= 520px) {
+  .tab {
+    padding: 8px 16px;
+  }
+}
+@media (pointer: fine) {
+  .tab:hover:not(.disabled):not(.selected) {
+    background-color: var(--text-button-hover-bg-color);
+  }
+}
+.tab:active:not(.disabled):not(.selected) {
+  background-color: var(--text-button-hover-bg-color);
+}
+.tab.disabled {
+  color: var(--text-button-disabled-text-color);
+}
+.tab.selected {
+  mix-blend-mode: difference;
+}
 .icon.svg {
   display: flex;
   align-items: center;
@@ -2106,6 +2151,38 @@ li.chat-content-list-item.temp {
   }
   .persona-display > .mobile-button-container > button {
     flex-grow: 1;
+  }
+}
+.trade-material-modal {
+  position: relative;
+}
+.trade-material-modal > header {
+  height: 160px;
+}
+.trade-material-modal > main {
+  padding-top: 40px !important;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.trade-material-modal > main > .material-icon {
+  position: absolute;
+  top: 100px;
+  z-index: 1;
+  width: 80px;
+  height: 80px;
+  border-radius: 16px;
+  background-color: #333;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.trade-material-modal > main > h2 {
+  font-size: 26px;
+}
+@container (width <= 520px) {
+  .trade-material-modal > main > h2 {
+    font-size: 22px;
   }
 }
 .gaia-materials-logo {
