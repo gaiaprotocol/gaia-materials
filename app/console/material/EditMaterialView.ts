@@ -36,7 +36,6 @@ export default class EditMaterialView extends View {
             if (this.address && this.form.data) {
               await new MaterialContract(this.address).setName(newName);
               await this.syncMaterialMetadataToDB();
-              this.form.data = { ...this.form.data, name: newName };
             }
           },
           editSymbol: async () => {
@@ -49,7 +48,6 @@ export default class EditMaterialView extends View {
             if (this.address && this.form.data) {
               await new MaterialContract(this.address).setSymbol(newSymbol);
               await this.syncMaterialMetadataToDB();
-              this.form.data = { ...this.form.data, symbol: newSymbol };
             }
           },
         }),
@@ -89,18 +87,21 @@ export default class EditMaterialView extends View {
   private async syncMaterialMetadataToDB(): Promise<void> {
     if (!this.address) throw new Error("Material address is required");
 
-    await GaiaProtocolConfig.supabaseConnector.callEdgeFunction(
-      "sync-material-metadata-to-db",
-      { address: this.address },
-    );
+    await GaiaProtocolConfig.supabaseConnector
+      .callEdgeFunction<{ name: string; symbol: string }>(
+        "sync-material-metadata-to-db",
+        { address: this.address },
+      );
   }
 
   private async saveMaterial(): Promise<void> {
     if (!this.form.data) throw new Error("Material data is required");
 
-    await MaterialDataManager.updateMaterial(this.form.data);
     await this.syncMaterialMetadataToDB();
+    const updatedMaterial = await MaterialDataManager.updateMaterial(
+      this.form.data,
+    );
 
-    Router.go(`/console/material/${this.form.data.address}`, this.form.data);
+    Router.go(`/console/material/${updatedMaterial.address}`, updatedMaterial);
   }
 }
