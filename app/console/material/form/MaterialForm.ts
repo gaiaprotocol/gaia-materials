@@ -1,7 +1,6 @@
 import { DomNode, el } from "@common-module/app";
 import { Button, ButtonType, Input } from "@common-module/app-components";
 import { LogoInput, MaterialEntity } from "gaiaprotocol";
-import { LogoData } from "gaiaprotocol/lib/form/LogoInput.js";
 
 interface MaterialFormOptions {
   editName?: () => Promise<void>;
