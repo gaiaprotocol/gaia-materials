@@ -3,7 +3,7 @@ import { Button, ButtonType } from "@common-module/app-components";
 import { AddIcon, EditIcon } from "@gaiaprotocol/svg-icons";
 import { GameDataManager, GameEntity, MaterialDataManager } from "gaiaprotocol";
 import ConsoleLayout from "../ConsoleLayout.js";
-import ConsoleGameMaterialList from "../material/ConsoleGameMaterialList.js";
+import ConsoleGameMaterialList from "../material/ConsoleMaterialList.js";
 
 export default class ConsoleGameInfoView extends View {
   constructor() {
@@ -33,6 +33,13 @@ export default class ConsoleGameInfoView extends View {
         onClick: () =>
           Router.go(`/console/game/${game.slug}/new-material`, game),
       }),
+      new Button({
+        type: ButtonType.Contained,
+        icon: new AddIcon(),
+        title: "Add existing material",
+        onClick: () =>
+          Router.go(`/console/game/${game.slug}/add-material`, game),
+      }),
     );
 
     if (game.id) await this.loadMaterials(game.id);
@@ -40,6 +47,12 @@ export default class ConsoleGameInfoView extends View {
 
   private async loadMaterials(gameId: number) {
     const materials = await MaterialDataManager.getMaterialsByGame(gameId);
-    this.container.append(new ConsoleGameMaterialList(materials));
+    const materialsList = new ConsoleGameMaterialList(materials);
+    materialsList.on(
+      "materialSelected",
+      (material) =>
+        Router.go(`/console/material/${material.address}`, material),
+    );
+    this.container.append(materialsList);
   }
 }
