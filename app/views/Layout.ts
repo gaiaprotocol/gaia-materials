@@ -4,17 +4,17 @@ import { WalletLoginManager } from "@common-module/wallet-login";
 import MaterialTechLogo from "../GaiaMaterialsLogo.js";
 
 export default class Layout extends View {
-  private static current: Layout;
+  private static _current: Layout;
 
   public static set content(content: DomNode) {
-    Layout.current.contentContainer.append(content);
+    Layout._current.contentContainer.append(content);
   }
 
   private contentContainer: DomNode;
 
   constructor() {
     super();
-    Layout.current = this;
+    Layout._current = this;
 
     this.container = el(
       ".layout",

@@ -4,17 +4,17 @@ import { WalletLoginManager } from "@common-module/wallet-login";
 import MaterialTechLogo from "../GaiaMaterialsLogo.js";
 
 export default class ConsoleLayout extends View {
-  private static current: ConsoleLayout;
+  private static _current: ConsoleLayout;
 
   public static set content(content: DomNode) {
-    ConsoleLayout.current.contentContainer.append(content);
+    ConsoleLayout._current.contentContainer.append(content);
   }
 
   private contentContainer: DomNode;
 
   constructor() {
     super();
-    ConsoleLayout.current = this;
+    ConsoleLayout._current = this;
 
     this.container = el(
       ".console-layout",
